@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sumedh Bamane — Portfolio</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- Game canvas -->
+    <div id="game-container"></div>
+
+    <!-- Project screen overlay (shown when entering a pipe) -->
+    <div id="project-screen">
+        <div class="project-card" id="project-card-content">
+            <!-- filled dynamically by game.js -->
+        </div>
+    </div>
+
+    <!-- On-screen D-pad -->
+    <div id="dpad">
+        <div class="dpad-btn" id="btn-up">▲</div>
+        <div class="dpad-btn" id="btn-left">◀</div>
+        <div class="dpad-btn" id="btn-down">▼</div>
+        <div class="dpad-btn" id="btn-right">▶</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
+    <script src="projects.js"></script>
+    <script src="game.js"></script>
+
+</body>
+
+</html>
