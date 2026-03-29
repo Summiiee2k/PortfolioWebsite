@@ -4,30 +4,31 @@
     box-sizing: border-box;
 }
 
+html,
 body {
-    background: #1a1a2e;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
+    background: #050510;
     font-family: 'Courier New', monospace;
 }
 
-#game-container {
-    position: relative;
+#game-container canvas {
+    display: block;
+    width: 100vw !important;
+    height: 100vh !important;
 }
 
-/* ── Project screen overlay ── */
+/* ── Project overlay ── */
 #project-screen {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(10, 10, 20, 0.97);
+    background: rgba(5, 5, 16, 0.96);
     z-index: 100;
     justify-content: center;
     align-items: center;
-    animation: fadeIn 0.3s ease;
+    animation: fadeIn 0.25s ease;
 }
 
 #project-screen.active {
@@ -37,7 +38,7 @@ body {
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(16px);
     }
 
     to {
@@ -47,55 +48,55 @@ body {
 }
 
 .project-card {
-    background: #0f1923;
+    background: #0a1020;
     border: 1px solid #00ff88;
     border-radius: 12px;
     padding: 40px;
-    max-width: 680px;
-    width: 90%;
+    max-width: 700px;
+    width: 92%;
     color: #e0e0e0;
     position: relative;
+    max-height: 85vh;
+    overflow-y: auto;
 }
 
-.project-card .year {
-    font-size: 12px;
+.proj-year {
+    font-size: 11px;
     color: #00ff88;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     text-transform: uppercase;
     margin-bottom: 8px;
 }
 
-.project-card h1 {
+.project-card h1.proj-title {
     font-size: 26px;
     font-weight: 700;
     color: #ffffff;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     line-height: 1.3;
 }
 
-.project-card .description {
+.proj-desc {
     font-size: 14px;
-    line-height: 1.8;
-    color: #a0b0c0;
+    line-height: 1.85;
+    color: #8899aa;
     margin-bottom: 20px;
-    font-family: 'Courier New', monospace;
 }
 
 .metrics {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
 .metric {
-    background: #1a2a1a;
+    background: #0d200d;
     border: 1px solid #00ff88;
     color: #00ff88;
     font-size: 12px;
     padding: 4px 12px;
     border-radius: 4px;
-    font-family: 'Courier New', monospace;
 }
 
 .stack {
@@ -106,9 +107,9 @@ body {
 }
 
 .stack-tag {
-    background: #1a1a3a;
-    border: 1px solid #4466ff;
-    color: #7799ff;
+    background: #0d0d2a;
+    border: 1px solid #334488;
+    color: #6688cc;
     font-size: 12px;
     padding: 4px 10px;
     border-radius: 4px;
@@ -120,7 +121,7 @@ body {
 }
 
 .btn {
-    padding: 10px 24px;
+    padding: 10px 22px;
     border-radius: 6px;
     font-size: 13px;
     font-family: 'Courier New', monospace;
@@ -128,37 +129,38 @@ body {
     cursor: pointer;
     text-decoration: none;
     border: none;
-    transition: transform 0.1s, opacity 0.2s;
+    transition: transform 0.1s, opacity 0.15s;
 }
 
 .btn:hover {
     transform: translateY(-2px);
-    opacity: 0.9;
+    opacity: 0.88;
 }
 
 .btn-github {
-    background: #238636;
-    color: #ffffff;
+    background: #1a7a30;
+    color: #fff;
 }
 
 .btn-demo {
-    background: #1f3a6e;
+    background: #0d1e4a;
     color: #7799ff;
-    border: 1px solid #4466ff;
+    border: 1px solid #334488;
 }
 
 .btn-exit {
     position: absolute;
-    top: 16px;
-    right: 16px;
+    top: 14px;
+    right: 14px;
     background: transparent;
     color: #ff4466;
     border: 1px solid #ff4466;
-    padding: 6px 14px;
+    padding: 5px 12px;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 11px;
     cursor: pointer;
     font-family: 'Courier New', monospace;
+    transition: background 0.15s;
 }
 
 .btn-exit:hover {
@@ -166,10 +168,10 @@ body {
     color: #fff;
 }
 
-/* ── On-screen D-pad ── */
+/* ── D-pad ── */
 #dpad {
     position: fixed;
-    bottom: 24px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     display: grid;
@@ -181,22 +183,22 @@ body {
 }
 
 .dpad-btn {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     color: white;
-    font-size: 18px;
+    font-size: 17px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background 0.1s;
     -webkit-tap-highlight-color: transparent;
+    transition: background 0.1s;
 }
 
 .dpad-btn:active,
 .dpad-btn.pressed {
-    background: rgba(0, 255, 136, 0.35);
+    background: rgba(0, 255, 136, 0.3);
     border-color: #00ff88;
 }
 
@@ -218,19 +220,4 @@ body {
 #btn-down {
     grid-column: 2;
     grid-row: 2;
-}
-
-html,
-body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-}
-
-#game-container canvas {
-    display: block;
-    width: 100vw !important;
-    height: 100vh !important;
 }
