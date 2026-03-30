@@ -1,7 +1,7 @@
 import { TS } from '../constants.js';
 
 export function buildSkillsZone(scene, H, platforms) {
-    const startX = TS * 26;
+    const startX = TS * 90;
     const groundY = H - TS;
 
     scene.add.text(startX, groundY - TS * 10, '⚙  SKILLS', {

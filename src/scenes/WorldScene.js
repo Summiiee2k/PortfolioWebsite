@@ -2,11 +2,30 @@ import { TS, SCALE } from '../constants.js';
 import { PROJECTS } from '../data/projects.js';
 import { ProjectScreen } from '../ui/ProjectScreen.js';
 import { Dpad } from '../ui/Dpad.js';
+import { NavMenu } from '../ui/NavMenu.js';
+import { BiomeManager } from '../zones/BiomeManager.js';
 import { buildHeroZone } from '../zones/HeroZone.js';
+import { buildAboutZone } from '../zones/AboutZone.js';
+import { buildEducationZone } from '../zones/EducationZone.js';
 import { buildSkillsZone } from '../zones/SkillsZone.js';
 import { buildExperienceZone } from '../zones/ExperienceZone.js';
 import { buildProjectsZone } from '../zones/ProjectsZone.js';
+import { buildHobbiesZone } from '../zones/HobbiesZone.js';
 import { buildContactZone } from '../zones/ContactZone.js';
+import { buildEasterEggZone } from '../zones/EasterEggZone.js';
+
+// zone X positions in tiles — single source of truth
+export const ZONE_TILES = {
+    hero: 0,
+    about: 26,
+    education: 56,
+    skills: 90,
+    experience: 128,
+    projects: 175,
+    hobbies: 224,
+    contact: 255,
+    easter: 282,
+};
 
 export class WorldScene extends Phaser.Scene {
     constructor() { super('World'); }
@@ -18,23 +37,34 @@ export class WorldScene extends Phaser.Scene {
         this.pipeZones = [];
         this._currentPipe = null;
         this._promptText = null;
+        this._easterTriggered = false;
 
-        const WORLD_W = TS * 24 * 12;
+        const WORLD_W = TS * 320;
         this.physics.world.setBounds(0, 0, WORLD_W, H);
 
-        // sky
-        this._buildSky(W, H, WORLD_W);
+        // biome manager (handles sky + ground colour)
+        this._biome = new BiomeManager(this);
+
+        // stars (static, behind everything)
+        this._buildStars(WORLD_W, H);
+
+        // clouds
+        this._buildClouds(WORLD_W, H);
 
         // ground
         this.platforms = this.physics.add.staticGroup();
         this._buildGround(WORLD_W, H);
 
-        // zones
+        // all zones
         buildHeroZone(this, H);
+        buildAboutZone(this, H);
+        buildEducationZone(this, H);
         buildSkillsZone(this, H, this.platforms);
         buildExperienceZone(this, H);
         buildProjectsZone(this, H, this.platforms, this.pipeZones, PROJECTS);
+        buildHobbiesZone(this, H);
         buildContactZone(this, H);
+        buildEasterEggZone(this, H);
 
         // player
         this.player = this._createPlayer(H);
@@ -53,43 +83,50 @@ export class WorldScene extends Phaser.Scene {
         this._projectScreen = new ProjectScreen();
         this._projectScreen.setScene(this);
         this._dpad = new Dpad();
+
+        // nav menu — teleport function
+        this._navMenu = new NavMenu((zoneKey) => {
+            const tile = ZONE_TILES[zoneKey];
+            if (tile === undefined) return;
+            const targetX = tile * TS;
+            // move player and camera instantly
+            this.player.setX(targetX + TS * 3);
+            this.player.setVelocity(0, 0);
+            this.cameras.main.centerOn(targetX + TS * 3, this.player.y);
+        });
     }
 
-    _buildSky(W, H, WORLD_W) {
-        const sky = this.add.graphics();
-        sky.fillGradientStyle(0x050510, 0x050510, 0x0d1f4a, 0x0d1f4a, 1);
-        sky.fillRect(0, 0, W, H);
-        sky.setScrollFactor(0).setDepth(-10);
-
-        for (let i = 0; i < 130; i++) {
+    _buildStars(WORLD_W, H) {
+        for (let i = 0; i < 180; i++) {
             const star = this.add.rectangle(
                 Phaser.Math.Between(0, WORLD_W),
                 Phaser.Math.Between(0, H * 0.8),
                 Phaser.Math.Between(1, 2), Phaser.Math.Between(1, 2),
                 0xffffff,
-                Phaser.Math.FloatBetween(0.3, 1.0)
-            ).setScrollFactor(Phaser.Math.FloatBetween(0.02, 0.15)).setDepth(-8);
+                Phaser.Math.FloatBetween(0.2, 0.9)
+            ).setScrollFactor(Phaser.Math.FloatBetween(0.02, 0.18)).setDepth(-8);
 
             if (i % 3 === 0) {
                 this.tweens.add({
                     targets: star, alpha: 0.05,
-                    duration: Phaser.Math.Between(700, 2200),
+                    duration: Phaser.Math.Between(700, 2500),
                     yoyo: true, repeat: -1,
-                    delay: Phaser.Math.Between(0, 2000)
+                    delay: Phaser.Math.Between(0, 2000),
                 });
             }
         }
+    }
 
-        // pixel clouds
-        for (let c = 0; c < 14; c++) {
-            const cx = Phaser.Math.Between(TS * 5, WORLD_W - TS * 5);
-            const cy = Phaser.Math.Between(40, H * 0.42);
-            const sf = Phaser.Math.FloatBetween(0.04, 0.22);
+    _buildClouds(WORLD_W, H) {
+        for (let c = 0; c < 18; c++) {
+            const cx = Phaser.Math.Between(TS * 3, WORLD_W - TS * 3);
+            const cy = Phaser.Math.Between(30, H * 0.4);
+            const sf = Phaser.Math.FloatBetween(0.04, 0.2);
             const cg = this.add.graphics().setScrollFactor(sf).setDepth(-7);
-            cg.fillStyle(0x142040, 0.55);
-            cg.fillRect(cx, cy + 10, 90, 18);
-            cg.fillRect(cx + 10, cy + 2, 70, 14);
-            cg.fillRect(cx + 24, cy - 6, 42, 14);
+            cg.fillStyle(0x142040, 0.5);
+            cg.fillRect(cx, cy + 12, 90, 18);
+            cg.fillRect(cx + 12, cy + 4, 66, 14);
+            cg.fillRect(cx + 26, cy - 4, 38, 14);
         }
     }
 
@@ -97,19 +134,14 @@ export class WorldScene extends Phaser.Scene {
         const groundY = H - TS;
         for (let x = 0; x < worldW; x += TS) {
             const g = this.add.graphics();
-            // dirt
             g.fillStyle(0x8B5E3C, 1);
             g.fillRect(x, groundY, TS, TS * 2);
-            // grass top
             g.fillStyle(0x43A047, 1);
             g.fillRect(x, groundY, TS, 11);
-            // grass highlight
             g.fillStyle(0x66BB6A, 1);
             g.fillRect(x, groundY, TS, 4);
-            // dirt texture line
-            g.lineStyle(1, 0x000000, 0.12);
+            g.lineStyle(1, 0x000000, 0.1);
             g.strokeRect(x, groundY, TS, TS);
-            // lower dirt
             g.fillStyle(0x6D4C2A, 1);
             g.fillRect(x, groundY + TS, TS, TS);
 
@@ -122,29 +154,25 @@ export class WorldScene extends Phaser.Scene {
     }
 
     _createPlayer(H) {
-        // create animations from individual images
         if (!this.anims.exists('idle')) {
             this.anims.create({
                 key: 'idle',
                 frames: [{ key: 'player_idle' }],
-                frameRate: 1
+                frameRate: 1,
             });
         }
         if (!this.anims.exists('walk')) {
             this.anims.create({
                 key: 'walk',
-                frames: [
-                    { key: 'player_walk1' },
-                    { key: 'player_walk2' },
-                ],
-                frameRate: 8, repeat: -1
+                frames: [{ key: 'player_walk1' }, { key: 'player_walk2' }],
+                frameRate: 8, repeat: -1,
             });
         }
         if (!this.anims.exists('jump')) {
             this.anims.create({
                 key: 'jump',
                 frames: [{ key: 'player_jump' }],
-                frameRate: 1
+                frameRate: 1,
             });
         }
 
@@ -152,9 +180,7 @@ export class WorldScene extends Phaser.Scene {
             TS * 3, H - TS * 4, 'player_idle'
         ).setScale(0.65).setCollideWorldBounds(true);
 
-        // hitbox sized to character body, not full image
         player.setSize(38, 90).setOffset(21, 18);
-
         this.physics.add.collider(player, this.platforms);
         return player;
     }
@@ -164,8 +190,8 @@ export class WorldScene extends Phaser.Scene {
         const k = this.keys;
         const d = this._dpad.state;
         const onGround = p.body.blocked.down;
-        const SPEED = 260;
-        const JUMP = -520;
+        const SPEED = 280;
+        const JUMP = -540;
 
         if (k.left.isDown || d.left) {
             p.setVelocityX(-SPEED);
@@ -185,6 +211,19 @@ export class WorldScene extends Phaser.Scene {
         }
         if (!onGround) p.anims.play('jump', true);
 
+        // update biome based on camera position
+        this._biome.update(this.cameras.main.scrollX);
+
+        // update active nav item
+        const scrollX = this.cameras.main.scrollX;
+        const tile = scrollX / TS;
+        let activeZone = 'hero';
+        for (const [zone, startTile] of Object.entries(ZONE_TILES)) {
+            if (tile >= startTile) activeZone = zone;
+        }
+        this._navMenu.setActive(activeZone);
+
+        // pipe proximity
         this._checkPipeProximity();
 
         if (Phaser.Input.Keyboard.JustDown(k.down) && this._currentPipe) {
@@ -213,11 +252,11 @@ export class WorldScene extends Phaser.Scene {
                 this._promptText = this.add.text(
                     nearest.x, nearest.y - TS * 0.5,
                     '▼  PRESS ↓ TO ENTER', {
-                    fontSize: '11px', fill: '#ffff00',
+                    fontSize: '12px', fill: '#ffff00',
                     fontFamily: 'Courier New', fontStyle: 'bold',
                     stroke: '#000', strokeThickness: 4,
                     backgroundColor: '#00000099',
-                    padding: { x: 8, y: 5 }
+                    padding: { x: 8, y: 5 },
                 }
                 ).setOrigin(0.5);
 
@@ -225,7 +264,7 @@ export class WorldScene extends Phaser.Scene {
                     targets: this._promptText,
                     y: this._promptText.y - 10,
                     duration: 600, yoyo: true, repeat: -1,
-                    ease: 'Sine.easeInOut'
+                    ease: 'Sine.easeInOut',
                 });
             }
         }
