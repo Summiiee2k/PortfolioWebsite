@@ -2,11 +2,11 @@ import { TS } from '../constants.js';
 
 const JOBS = [
     {
-        name: 'Boehringer\nIngelheim',
-        role: 'Trainee AI Engineer',
+        name: 'Boehringer Ingelheim',
+        role: 'Trainee Systems Analyst',
         dates: 'Apr 2025 – Mar 2026',
         color: 0x1565C0, accent: 0x42A5F5,
-        labelColor: '#90CAF9',
+        labelColor: '#009632ff',
         logoColor: 0x42A5F5,
         logoLetter: 'B',
         x: 0
@@ -44,7 +44,7 @@ const JOBS = [
 ];
 
 export function buildExperienceZone(scene, H) {
-    const startX = TS * 46;
+    const startX = TS * 68;
     const groundY = H - TS;
 
     scene.add.text(startX, groundY - TS * 11, '🏢  EXPERIENCE', {

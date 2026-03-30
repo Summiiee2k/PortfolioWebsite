@@ -1,7 +1,7 @@
 import { TS } from '../constants.js';
 
 export function buildProjectsZone(scene, H, platforms, pipeZones, projects) {
-    const startX = TS * 96;
+    const startX = TS * 118;
     const groundY = H - TS;
 
     scene.add.text(startX, groundY - TS * 11, '🟢  PROJECTS — ENTER THE PIPES', {
@@ -61,14 +61,24 @@ export function buildProjectsZone(scene, H, platforms, pipeZones, projects) {
         g.fillRect(lipX + lipW - 9, lipY, 9, lipH);
 
         // ── PIPE COLLIDER — solid top so player can stand on it
-        const pipeTop = scene.add.rectangle(
+        const pipeLip = scene.add.rectangle(
             px + pipeW / 2,
-            pipeTopY - 2,
-            pipeW + 16,   // match lip width
-            12,
+            pipeTopY - lipH / 2,
+            pipeW + 16,
+            lipH,
         ).setVisible(false);
-        scene.physics.add.existing(pipeTop, true);
-        platforms.add(pipeTop);
+        scene.physics.add.existing(pipeLip, true);
+        platforms.add(pipeLip);
+
+        // ── PIPE COLLIDER: full body (blocks passing through from below)
+        const pipeBody = scene.add.rectangle(
+            px + pipeW / 2,
+            pipeTopY + pipeH / 2,
+            pipeW,
+            pipeH,
+        ).setVisible(false);
+        scene.physics.add.existing(pipeBody, true);
+        platforms.add(pipeBody);
 
         // label above
         scene.add.text(px + pipeW / 2, pipeTopY - lipH - 12, proj.pipeLabel, {

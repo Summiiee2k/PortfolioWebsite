@@ -35,11 +35,11 @@ export class BootScene extends Phaser.Scene {
         ).setOrigin(0.5);
 
         this.load.on('loaderror', f => console.error('LOAD ERROR:', f.src));
-
+        this.load.image('player_idle', './assets/images/player_idle.png');
+        this.load.image('player_walk1', './assets/images/player_walk1.png');
+        this.load.image('player_walk2', './assets/images/player_walk2.png');
+        this.load.image('player_jump', './assets/images/player_jump.png');
         this.load.spritesheet('tiles', './assets/images/tilemap.png',
-            { frameWidth: 16, frameHeight: 16, spacing: 0, margin: 0 }
-        );
-        this.load.spritesheet('characters', './assets/images/tilemap-characters.png',
             { frameWidth: 16, frameHeight: 16, spacing: 0, margin: 0 }
         );
     }

@@ -19,7 +19,7 @@ export class WorldScene extends Phaser.Scene {
         this._currentPipe = null;
         this._promptText = null;
 
-        const WORLD_W = TS * 24 * 9;
+        const WORLD_W = TS * 24 * 12;
         this.physics.world.setBounds(0, 0, WORLD_W, H);
 
         // sky
@@ -122,34 +122,38 @@ export class WorldScene extends Phaser.Scene {
     }
 
     _createPlayer(H) {
-        const player = this.physics.add.sprite(
-            TS * 3, H - TS * 3, 'characters', 0
-        ).setScale(SCALE * 2).setCollideWorldBounds(true);
-
-        player.setSize(10, 13).setOffset(3, 3);
-
-        if (!this.anims.exists('walk')) {
-            this.anims.create({
-                key: 'walk',
-                frames: this.anims.generateFrameNumbers('characters',
-                    { frames: [0, 1] }),
-                frameRate: 8, repeat: -1
-            });
-        }
+        // create animations from individual images
         if (!this.anims.exists('idle')) {
             this.anims.create({
                 key: 'idle',
-                frames: [{ key: 'characters', frame: 0 }],
+                frames: [{ key: 'player_idle' }],
                 frameRate: 1
+            });
+        }
+        if (!this.anims.exists('walk')) {
+            this.anims.create({
+                key: 'walk',
+                frames: [
+                    { key: 'player_walk1' },
+                    { key: 'player_walk2' },
+                ],
+                frameRate: 8, repeat: -1
             });
         }
         if (!this.anims.exists('jump')) {
             this.anims.create({
                 key: 'jump',
-                frames: [{ key: 'characters', frame: 2 }],
+                frames: [{ key: 'player_jump' }],
                 frameRate: 1
             });
         }
+
+        const player = this.physics.add.sprite(
+            TS * 3, H - TS * 4, 'player_idle'
+        ).setScale(0.65).setCollideWorldBounds(true);
+
+        // hitbox sized to character body, not full image
+        player.setSize(38, 90).setOffset(21, 18);
 
         this.physics.add.collider(player, this.platforms);
         return player;
