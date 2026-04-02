@@ -1,21 +1,21 @@
 export class NavMenu {
-    constructor(teleportFn) {
-        this._teleport = teleportFn;
-        this._open = false;
-        this._build();
-    }
+  constructor(teleportFn) {
+    this._teleport = teleportFn;
+    this._open = false;
+    this._build();
+  }
 
-    _build() {
-        // inject styles
-        const style = document.createElement('style');
-        style.textContent = `
+  _build() {
+    // inject styles
+    const style = document.createElement('style');
+    style.textContent = `
       #nav-toggle {
         position: fixed;
         top: 20px; right: 20px;
         background: rgba(0,255,136,0.12);
         border: 1px solid rgba(0,255,136,0.4);
         color: #00ff88;
-        font-family: 'Courier New', monospace;
+        font-family: 'Press Start 2P', monospace;
         font-size: 12px;
         padding: 8px 14px;
         border-radius: 6px;
@@ -82,71 +82,70 @@ export class NavMenu {
       }
       .nav-item.active .nav-dot { opacity: 1; background: #00ff88; }
     `;
-        document.head.appendChild(style);
+    document.head.appendChild(style);
 
-        // toggle button
-        const toggle = document.createElement('div');
-        toggle.id = 'nav-toggle';
-        toggle.innerHTML = '◈ NAVIGATE';
-        toggle.addEventListener('click', () => this.toggle());
-        document.body.appendChild(toggle);
+    // toggle button
+    const toggle = document.createElement('div');
+    toggle.id = 'nav-toggle';
+    toggle.innerHTML = '◈ NAVIGATE';
+    toggle.addEventListener('click', () => this.toggle());
+    document.body.appendChild(toggle);
 
-        // menu panel
-        const menu = document.createElement('div');
-        menu.id = 'nav-menu';
-        menu.innerHTML = `
+    // menu panel
+    const menu = document.createElement('div');
+    menu.id = 'nav-menu';
+    menu.innerHTML = `
       <div class="nav-header">JUMP TO ZONE</div>
     `;
 
-        const zones = [
-            { icon: '🏠', label: 'Home', key: 'hero' },
-            { icon: '👤', label: 'About', key: 'about' },
-            { icon: '🎓', label: 'Education', key: 'education' },
-            { icon: '⚙️', label: 'Skills', key: 'skills' },
-            { icon: '🏢', label: 'Experience', key: 'experience' },
-            { icon: '🟢', label: 'Projects', key: 'projects' },
-            { icon: '🎮', label: 'Hobbies', key: 'hobbies' },
-            { icon: '📬', label: 'Contact', key: 'contact' },
-            { icon: '🥚', label: '???', key: 'easter' },
-        ];
+    const zones = [
+      { icon: '🏠', label: 'Home', key: 'hero' },
+      { icon: '👤', label: 'About', key: 'about' },
+      { icon: '🎓', label: 'Education', key: 'education' },
+      { icon: '⚙️', label: 'Skills', key: 'skills' },
+      { icon: '🏢', label: 'Experience', key: 'experience' },
+      { icon: '🟢', label: 'Projects', key: 'projects' },
+      { icon: '🎮', label: 'Hobbies', key: 'hobbies' },
+      { icon: '📬', label: 'Contact', key: 'contact' },
+    ];
 
-        zones.forEach(z => {
-            const item = document.createElement('div');
-            item.className = 'nav-item';
-            item.dataset.zone = z.key;
-            item.innerHTML = `
+    zones.forEach(z => {
+      const item = document.createElement('div');
+      item.className = 'nav-item';
+      item.dataset.zone = z.key;
+      item.innerHTML = `
         <span class="nav-icon">${z.icon}</span>
         <span>${z.label}</span>
         <span class="nav-dot"></span>
       `;
-            item.addEventListener('click', () => {
-                this._teleport(z.key);
-                this.close();
-            });
-            menu.appendChild(item);
-        });
+      item.addEventListener('click', () => {
+        this._teleport(z.key);
+        this.close();
+      });
+      menu.appendChild(item);
+    });
 
-        document.body.appendChild(menu);
-        this._menu = menu;
-        this._toggle = toggle;
-        this._items = menu.querySelectorAll('.nav-item');
-    }
+    document.body.appendChild(menu);
+    this._menu = menu;
+    this._toggle = toggle;
+    this._items = menu.querySelectorAll('.nav-item');
+  }
 
-    toggle() {
-        this._open = !this._open;
-        this._menu.classList.toggle('open', this._open);
-        this._toggle.innerHTML = this._open ? '✕ CLOSE' : '◈ NAVIGATE';
-    }
+  toggle() {
+    this._open = !this._open;
+    this._menu.classList.toggle('open', this._open);
+    this._toggle.innerHTML = this._open ? '✕ CLOSE' : '◈ NAVIGATE';
+  }
 
-    close() {
-        this._open = false;
-        this._menu.classList.remove('open');
-        this._toggle.innerHTML = '◈ NAVIGATE';
-    }
+  close() {
+    this._open = false;
+    this._menu.classList.remove('open');
+    this._toggle.innerHTML = '◈ NAVIGATE';
+  }
 
-    setActive(zoneKey) {
-        this._items.forEach(item => {
-            item.classList.toggle('active', item.dataset.zone === zoneKey);
-        });
-    }
+  setActive(zoneKey) {
+    this._items.forEach(item => {
+      item.classList.toggle('active', item.dataset.zone === zoneKey);
+    });
+  }
 }

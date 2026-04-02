@@ -1,4 +1,4 @@
-import { TS } from '../constants.js';
+import { TS, FONT } from '../constants.js';
 
 const CONTACTS = [
     {
@@ -28,7 +28,7 @@ const CONTACTS = [
 ];
 
 export function buildContactZone(scene, H) {
-    const startX = TS * 255;
+    const startX = TS * 299;
     const groundY = H - TS;
     const g = scene.add.graphics();
 
@@ -89,7 +89,7 @@ export function buildContactZone(scene, H) {
     scene.add.text(startX + TS * 4, groundY - TS * 13.5,
         '[ GET IN TOUCH ]', {
         fontSize: '22px', fill: '#ffdd00',
-        fontFamily: 'Courier New', fontStyle: 'bold',
+        fontFamily: FONT, fontStyle: 'bold',
         stroke: '#000', strokeThickness: 5
     }
     ).setOrigin(0.5);
@@ -106,7 +106,7 @@ export function buildContactZone(scene, H) {
             startX - TS * 0.8, ty,
             `${c.icon}  ${c.label}`, {
             fontSize: '13px', fill: c.color,
-            fontFamily: 'Courier New',
+            fontFamily: FONT,
             stroke: '#000', strokeThickness: 2
         }
         );

@@ -1,7 +1,7 @@
-import { TS } from '../constants.js';
+import { TS, FONT } from '../constants.js';
 
 export function buildEasterEggZone(scene, H) {
-    const startX = TS * 282;
+    const startX = TS * 340;
     const groundY = H - TS;
 
     // sunny sky particles — floating confetti
@@ -49,26 +49,8 @@ export function buildEasterEggZone(scene, H) {
     g.fillStyle(0x1a1a2e, 1);
     g.fillRect(frameX, frameY, fW, fH);
 
-    // placeholder photo — checkerboard pattern
-    for (let row = 0; row < 7; row++) {
-        for (let col = 0; col < 6; col++) {
-            const even = (row + col) % 2 === 0;
-            g.fillStyle(even ? 0x2a2a4e : 0x1a1a2e, 1);
-            g.fillRect(frameX + col * TS, frameY + row * TS, TS, TS);
-        }
-    }
+    scene.add.image("EasterEgg.png")
 
-    // placeholder silhouette
-    g.fillStyle(0x4444aa, 0.6);
-    g.fillCircle(frameX + fW / 2, frameY + fH * 0.3, 40);
-    g.fillRoundedRect(frameX + fW / 2 - 50, frameY + fH * 0.5, 100, 80, 10);
-
-    // "PHOTO COMING SOON" text in frame
-    scene.add.text(frameX + fW / 2, frameY + fH / 2, '📸\nPHOTO\nCOMING SOON', {
-        fontSize: '13px', fill: '#aaaacc',
-        fontFamily: 'Courier New', align: 'center',
-        stroke: '#000', strokeThickness: 2, lineSpacing: 4,
-    }).setOrigin(0.5);
 
     // speech bubble above frame
     const bubbleX = frameX + fW / 2;
@@ -83,9 +65,9 @@ export function buildEasterEggZone(scene, H) {
         bubbleX, bubbleY + 42,
     );
 
-    scene.add.text(bubbleX, bubbleY, '😂 You found me!\nCongrats on the dedication!', {
+    scene.add.text(bubbleX, bubbleY, 'Did you go beyond the castle\n just to find this easter egg?', {
         fontSize: '11px', fill: '#111122',
-        fontFamily: 'Courier New', align: 'center',
+        fontFamily: FONT, align: 'center',
         lineSpacing: 4,
     }).setOrigin(0.5);
 
@@ -100,7 +82,7 @@ export function buildEasterEggZone(scene, H) {
 
     const achText = scene.add.text(achX, -50, '🏆  EXPLORER UNLOCKED\nYou found the Easter Egg!', {
         fontSize: '12px', fill: '#111111',
-        fontFamily: 'Courier New', fontStyle: 'bold',
+        fontFamily: FONT, fontStyle: 'bold',
         align: 'center', lineSpacing: 3,
     }).setOrigin(0.5).setScrollFactor(0).setDepth(51);
 
@@ -131,9 +113,9 @@ export function buildEasterEggZone(scene, H) {
 
     // "YOU'VE REACHED THE END" sign
     scene.add.text(startX + TS * 20, groundY - TS * 6,
-        '🎉  YOU REACHED THE END!\nThanks for exploring my world.', {
+        'YOU REACHED THE END!', {
         fontSize: '18px', fill: '#ffdd00',
-        fontFamily: 'Courier New', fontStyle: 'bold',
+        fontFamily: FONT, fontStyle: 'bold',
         stroke: '#000', strokeThickness: 4,
         align: 'center', lineSpacing: 8,
     }
@@ -158,7 +140,7 @@ export function buildEasterEggZone(scene, H) {
     // "THE END" on wall
     scene.add.text(startX + TS * 30, H * 0.35, 'THE\nEND', {
         fontSize: '16px', fill: '#ffffff',
-        fontFamily: 'Courier New', fontStyle: 'bold',
+        fontFamily: FONT, fontStyle: 'bold',
         stroke: '#000', strokeThickness: 3,
         align: 'center',
     }).setOrigin(0.5);

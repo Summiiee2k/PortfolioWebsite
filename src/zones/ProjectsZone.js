@@ -1,19 +1,19 @@
-import { TS } from '../constants.js';
+import { TS, FONT } from '../constants.js';
 
 export function buildProjectsZone(scene, H, platforms, pipeZones, projects) {
-    const startX = TS * 175;
+    const startX = TS * 195;
     const groundY = H - TS;
 
     scene.add.text(startX, groundY - TS * 11, '🟢  PROJECTS — ENTER THE PIPES', {
         fontSize: '22px', fill: '#ffdd00',
-        fontFamily: 'Courier New', fontStyle: 'bold',
+        fontFamily: FONT, fontStyle: 'bold',
         stroke: '#000', strokeThickness: 5
     });
 
     scene.add.text(startX, groundY - TS * 9.2,
         'Walk up to a pipe and press  ↓  to enter', {
         fontSize: '12px', fill: '#667788',
-        fontFamily: 'Courier New'
+        fontFamily: FONT
     });
 
     projects.forEach((proj, i) => {
@@ -83,7 +83,7 @@ export function buildProjectsZone(scene, H, platforms, pipeZones, projects) {
         // label above
         scene.add.text(px + pipeW / 2, pipeTopY - lipH - 12, proj.pipeLabel, {
             fontSize: '11px', fill: '#ffffff',
-            fontFamily: 'Courier New', fontStyle: 'bold',
+            fontFamily: FONT, fontStyle: 'bold',
             align: 'center', stroke: '#000', strokeThickness: 3
         }).setOrigin(0.5, 1);
 
@@ -93,7 +93,7 @@ export function buildProjectsZone(scene, H, platforms, pipeZones, projects) {
         nbg.fillCircle(px + pipeW / 2, pipeTopY + 28, 15);
         scene.add.text(px + pipeW / 2, pipeTopY + 28, String(i + 1), {
             fontSize: '14px', fill: '#ffffff',
-            fontFamily: 'Courier New', fontStyle: 'bold'
+            fontFamily: FONT, fontStyle: 'bold'
         }).setOrigin(0.5);
 
         // trigger zone — player must stand ON pipe lip and press ↓

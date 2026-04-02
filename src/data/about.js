@@ -1,0 +1,56 @@
+export const ABOUT_CARDS = [
+    {
+        id: 'origin',
+        title: 'THE ORIGIN',
+        accentColor: '#5C6BC0',
+        icon: '🎮',
+        paragraphs: [
+            "Started with a Bachelor in Game Development at Seamedu School of Pro-Expressionism, Pune.",
+            "Learned every layer of game production — Unity, C#, physics engines, SDLC, design documents, A/B testing, marketing and continuous support.",
+            "Built real games. Shipped them. Understood what it means to build something people actually use.",
+            "Game dev gave me the engineering mindset. The obsession with making things that WORK.",
+        ],
+        tags: ['Unity', 'C#', 'SDLC', 'Game Design', 'Physics Engines'],
+    },
+    {
+        id: 'pivot',
+        title: 'THE PIVOT',
+        accentColor: '#43A047',
+        icon: '💡',
+        paragraphs: [
+            "During my BCA, I stumbled across Machine Learning almost by accident.",
+            "The idea that software could LEARN from data — not just follow instructions — completely changed how I thought about building things.",
+            "I wanted to build systems that adapt, improve and make decisions. Not just systems that play by fixed rules.",
+            "So I pivoted. Hard. Two Masters degrees. Hundreds of hours of building. No looking back.",
+        ],
+        tags: ['Machine Learning', 'Data Science', 'Python', 'Neural Networks'],
+    },
+    {
+        id: 'build',
+        title: 'THE BUILD',
+        accentColor: '#AB47BC',
+        icon: '⚙️',
+        paragraphs: [
+            "MCA in Big Data Analytics from Parul University, Gujarat. CGPA: 8.20/10.",
+            "MSc Big Data Analytics & AI from Universitat de Barcelona. Grade: 8.0/10.",
+            "Built RAG systems with LangChain and ChromaDB running in production.",
+            "Built MLOps pipelines with sliding-window drift detection and zero-downtime auto-retraining.",
+            "Built multi-agent AI publishers. Real-time computer vision systems. LLM cost optimisation. The works.",
+        ],
+        tags: ['RAG', 'MLOps', 'LangChain', 'FastAPI', 'CrewAI', 'AWS'],
+    },
+    {
+        id: 'now',
+        title: 'RIGHT NOW',
+        accentColor: '#EF5350',
+        icon: '📍',
+        paragraphs: [
+            "Based in Barcelona, Spain. Building AI products as an AI Engineer.",
+            "Working across startups — ScoutReach (AI job search) and SleepLeads (B2B lead gen) — and enterprise at Boehringer Ingelheim.",
+            "AWS AI Practitioner certified. Fluent in English and conversational in Spanish.",
+            "Open to exciting new opportunities where I can build things that matter.",
+            "Walk right to see everything I've shipped. →",
+        ],
+        tags: ['Barcelona', 'AWS Certified', 'Open to Work', 'AI Engineer'],
+    },
+];

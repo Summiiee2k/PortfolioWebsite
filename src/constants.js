@@ -1,18 +1,16 @@
 export const TILE = 16;
 export const SCALE = 3;
-export const TS = TILE * SCALE; // 48px per tile
+export const TS = TILE * SCALE; // 48px
+
+export const FONT = '"Press Start 2P", monospace';
 
 export const COLORS = {
     sky1: 0x050510,
     sky2: 0x0d1f4a,
     ground: 0x4CAF50,
     dirt: 0x8B5E3C,
-    dirtDark: 0x6D4C2A,
-    text: '#ffffff',
-    accent: '#00ff88',
-    yellow: '#ffdd00',
-    muted: '#7799cc',
-    dim: '#555577',
+    accent: 0x00ff88,
+    yellow: 0xFFDD00,
 };
 
 export const PIPE_COLORS = {

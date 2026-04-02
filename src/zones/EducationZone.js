@@ -1,4 +1,4 @@
-import { TS } from '../constants.js';
+import { TS, FONT } from '../constants.js';
 
 const SCHOOLS = [
     {
@@ -45,7 +45,7 @@ export function buildEducationZone(scene, H) {
 
     scene.add.text(startX, groundY - TS * 12, '🎓  EDUCATION', {
         fontSize: '28px', fill: '#ffdd00',
-        fontFamily: 'Courier New', fontStyle: 'bold',
+        fontFamily: FONT, fontStyle: 'bold',
         stroke: '#000', strokeThickness: 5,
     });
 
@@ -129,7 +129,7 @@ export function buildEducationZone(scene, H) {
         g.fillCircle(px + bW / 2, by + TS * 0.9, 22);
         scene.add.text(px + bW / 2, by + TS * 0.9, s.letter, {
             fontSize: '13px', fill: '#fff',
-            fontFamily: 'Courier New', fontStyle: 'bold',
+            fontFamily: FONT, fontStyle: 'bold',
             stroke: '#000', strokeThickness: 2,
         }).setOrigin(0.5);
 
@@ -145,19 +145,19 @@ export function buildEducationZone(scene, H) {
 
         scene.add.text(cardX, cardY - 44, s.short, {
             fontSize: '14px', fill: s.labelColor,
-            fontFamily: 'Courier New', fontStyle: 'bold',
+            fontFamily: FONT, fontStyle: 'bold',
             stroke: '#000', strokeThickness: 2,
         }).setOrigin(0.5, 0);
 
         scene.add.text(cardX, cardY - 26, s.degree, {
             fontSize: '10px', fill: '#aaccff',
-            fontFamily: 'Courier New',
+            fontFamily: FONT,
             stroke: '#000', strokeThickness: 2,
         }).setOrigin(0.5, 0);
 
         scene.add.text(cardX, cardY - 10, `${s.year}  ·  ${s.grade}`, {
             fontSize: '9px', fill: '#ffdd88',
-            fontFamily: 'Courier New',
+            fontFamily: FONT,
             stroke: '#000', strokeThickness: 2,
         }).setOrigin(0.5, 0);
     });
