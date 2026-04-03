@@ -69,8 +69,8 @@ function _buildHobbyPlacard(scene, px, groundY, hob, expandZones) {
 
     // camera icon + "PRESS ↓"
     scene.add.text(px + pW / 2, py + fw + (pHI - fw) * 0.55,
-        'PHOTOS & VIDEOS\nINSIDE!', {
-        fontSize: '6px', fill: '#334455',
+        'PRESS ⬇️ TO OPEN', {
+        fontSize: '12px', fill: '#cf0b0bff',
         fontFamily: FONT,
         align: 'center', lineSpacing: 8,
     }

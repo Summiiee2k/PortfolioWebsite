@@ -234,19 +234,14 @@ export class WorldScene extends Phaser.Scene {
         this._checkExpandProximity();
 
         // pipe entry
-        if (Phaser.Input.Keyboard.JustDown(k.down) && this._currentPipe) {
-            this._projectScreen.open(this._currentPipe.projectData);
-        }
-        if (this._dpad.justDown() && this._currentPipe) {
-            this._projectScreen.open(this._currentPipe.projectData);
-        }
+        const downPressed = Phaser.Input.Keyboard.JustDown(k.down) || this._dpad.justDown();
 
-        // expand entry
-        if (Phaser.Input.Keyboard.JustDown(k.down) && this._currentExpand) {
-            this._triggerExpand(this._currentExpand);
-        }
-        if (this._dpad.justDown() && this._currentExpand) {
-            this._triggerExpand(this._currentExpand);
+        if (downPressed) {
+            if (this._currentPipe) {
+                this._projectScreen.open(this._currentPipe.projectData);
+            } else if (this._currentExpand) {
+                this._triggerExpand(this._currentExpand);
+            }
         }
     }
 

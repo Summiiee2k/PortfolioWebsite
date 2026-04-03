@@ -1,46 +1,50 @@
 export class ExpandScreen {
-    constructor() {
-        this._overlay = document.getElementById('expand-screen');
-        this._content = document.getElementById('expand-content');
-        this._scene = null;
-        this._cards = [];
-        this._index = 0;
-        this._mode = null;
-
-        document.addEventListener('keydown', e => {
-            if (!this._overlay.classList.contains('active')) return;
-            if (e.key === 'Escape') this.close();
-            if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-                e.stopPropagation(); // prevent player movement
-                e.preventDefault();
-                if (this._mode === 'about') {
-                    if (e.key === 'ArrowRight') this._navigate(1);
-                    else this._navigate(-1);
-                }
-                if (this._mode === 'hobby') {
-                    this._galleryNav(e.key === 'ArrowRight' ? 1 : -1);
-                }
-            }
-        });
+  constructor() {
+    this._overlay = document.getElementById('expand-screen');
+    this._content = document.getElementById('expand-content');
+    if (!this._overlay || !this._content) {
+      console.error('ExpandScreen: missing #expand-screen or #expand-content in index.html');
+      return;
     }
+    this._scene = null;
+    this._cards = [];
+    this._index = 0;
+    this._mode = null;
 
-    setScene(scene) { this._scene = scene; }
+    document.addEventListener('keydown', e => {
+      if (!this._overlay.classList.contains('active')) return;
+      if (e.key === 'Escape') this.close();
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.stopPropagation(); // prevent player movement
+        e.preventDefault();
+        if (this._mode === 'about') {
+          if (e.key === 'ArrowRight') this._navigate(1);
+          else this._navigate(-1);
+        }
+        if (this._mode === 'hobby') {
+          this._galleryNav(e.key === 'ArrowRight' ? 1 : -1);
+        }
+      }
+    });
+  }
 
-    // ── ABOUT MODE ───────────────────────────────────────────────────
-    openAbout(cards, startIndex = 0) {
-        this._mode = 'about';
-        this._cards = cards;
-        this._index = startIndex;
-        this._renderAbout();
-        this._show();
-    }
+  setScene(scene) { this._scene = scene; }
 
-    _renderAbout() {
-        const card = this._cards[this._index];
-        const total = this._cards.length;
-        const accent = card.accentColor;
+  // ── ABOUT MODE ───────────────────────────────────────────────────
+  openAbout(cards, startIndex = 0) {
+    this._mode = 'about';
+    this._cards = cards;
+    this._index = startIndex;
+    this._renderAbout();
+    this._show();
+  }
 
-        this._content.innerHTML = `
+  _renderAbout() {
+    const card = this._cards[this._index];
+    const total = this._cards.length;
+    const accent = card.accentColor;
+
+    this._content.innerHTML = `
       <div class="ex-close" id="ex-close-btn">✕ ESC</div>
 
       <div class="ex-about-nav">
@@ -58,55 +62,55 @@ export class ExpandScreen {
 
       <div class="ex-paragraphs">
         ${card.paragraphs.map(p =>
-            `<p class="ex-para">${p}</p>`
-        ).join('')}
+      `<p class="ex-para">${p}</p>`
+    ).join('')}
       </div>
 
       <div class="ex-tags">
         ${card.tags.map(t =>
-            `<span class="ex-tag" style="border-color:${accent};color:${accent}">${t}</span>`
-        ).join('')}
+      `<span class="ex-tag" style="border-color:${accent};color:${accent}">${t}</span>`
+    ).join('')}
       </div>
 
       <div class="ex-dots">
         ${this._cards.map((_, i) =>
-            `<span class="ex-dot ${i === this._index ? 'active' : ''}"
+      `<span class="ex-dot ${i === this._index ? 'active' : ''}"
             style="${i === this._index ? `background:${accent}` : ''}"></span>`
-        ).join('')}
+    ).join('')}
       </div>
     `;
 
-        document.getElementById('ex-close-btn')
-            .addEventListener('click', () => this.close());
-        const prev = document.getElementById('ex-prev');
-        const next = document.getElementById('ex-next');
-        if (prev) prev.addEventListener('click', () => this._navigate(-1));
-        if (next) next.addEventListener('click', () => this._navigate(1));
-    }
+    document.getElementById('ex-close-btn')
+      .addEventListener('click', () => this.close());
+    const prev = document.getElementById('ex-prev');
+    const next = document.getElementById('ex-next');
+    if (prev) prev.addEventListener('click', () => this._navigate(-1));
+    if (next) next.addEventListener('click', () => this._navigate(1));
+  }
 
-    _navigate(dir) {
-        const newIndex = this._index + dir;
-        if (newIndex < 0 || newIndex >= this._cards.length) return;
-        this._index = newIndex;
-        this._renderAbout();
-    }
+  _navigate(dir) {
+    const newIndex = this._index + dir;
+    if (newIndex < 0 || newIndex >= this._cards.length) return;
+    this._index = newIndex;
+    this._renderAbout();
+  }
 
-    // ── HOBBY MODE ───────────────────────────────────────────────────
-    openHobby(hobbyData) {
-        this._mode = 'hobby';
-        this._hobbyData = hobbyData;
-        this._galIndex = 0;
-        this._renderHobby();
-        this._show();
-    }
+  // ── HOBBY MODE ───────────────────────────────────────────────────
+  openHobby(hobbyData) {
+    this._mode = 'hobby';
+    this._hobbyData = hobbyData;
+    this._galIndex = 0;
+    this._renderHobby();
+    this._show();
+  }
 
-    _renderHobby() {
-        const h = this._hobbyData;
-        const accent = h.accentColor;
-        const gal = h.gallery || [];
-        const video = h.youtubeId || null;
+  _renderHobby() {
+    const h = this._hobbyData;
+    const accent = h.accentColor;
+    const gal = h.gallery || [];
+    const video = h.youtubeId || null;
 
-        this._content.innerHTML = `
+    this._content.innerHTML = `
       <div class="ex-close" id="ex-close-btn">✕ ESC</div>
 
       <div class="ex-about-header" style="border-left: 4px solid ${accent}">
@@ -129,9 +133,9 @@ export class ExpandScreen {
             </div>
             <div class="ex-gallery-dots" id="gal-dots">
               ${gal.map((_, i) =>
-            `<span class="ex-dot ${i === 0 ? 'active' : ''}"
+      `<span class="ex-dot ${i === 0 ? 'active' : ''}"
                   style="${i === 0 ? `background:${accent}` : ''}"></span>`
-        ).join('')}
+    ).join('')}
             </div>
           ` : ''}
         </div>
@@ -154,71 +158,85 @@ export class ExpandScreen {
 
       <div class="ex-paragraphs">
         ${(h.paragraphs || []).map(p =>
-            `<p class="ex-para">${p}</p>`
-        ).join('')}
+      `<p class="ex-para">${p}</p>`
+    ).join('')}
       </div>
 
       <div class="ex-tags">
         ${(h.tags || []).map(t =>
-            `<span class="ex-tag" style="border-color:${accent};color:${accent}">${t}</span>`
-        ).join('')}
+      `<span class="ex-tag" style="border-color:${accent};color:${accent}">${t}</span>`
+    ).join('')}
       </div>
     `;
 
-        document.getElementById('ex-close-btn')
-            .addEventListener('click', () => this.close());
+    document.getElementById('ex-close-btn')
+      .addEventListener('click', () => this.close());
 
-        if (gal.length > 1) {
-            document.getElementById('gal-prev')
-                .addEventListener('click', () => this._galleryNav(-1));
-            document.getElementById('gal-next')
-                .addEventListener('click', () => this._galleryNav(1));
-        }
+    if (gal.length > 1) {
+      document.getElementById('gal-prev')
+        .addEventListener('click', () => this._galleryNav(-1));
+      document.getElementById('gal-next')
+        .addEventListener('click', () => this._galleryNav(1));
     }
+  }
 
-    _galleryItem(item, accent) {
-        if (item.type === 'image' && item.src) {
-            return `<img src="${item.src}" class="ex-gallery-img" alt="${item.caption || ''}" />`;
-        }
-        // placeholder
-        return `
-      <div class="ex-gallery-placeholder" style="border-color:${accent}">
-        <span class="ex-placeholder-icon">${item.placeholderIcon || '📷'}</span>
-        <p class="ex-placeholder-label">${item.caption || 'PHOTO COMING SOON'}</p>
-      </div>
+  _galleryItem(item, accent) {
+    if (item.type === 'image' && item.src) {
+      return `
+      <img src="${item.src}" class="ex-gallery-img" alt="${item.caption || ''}" />
     `;
     }
 
-    _galleryNav(dir) {
-        const gal = this._hobbyData.gallery || [];
-        this._galIndex = Math.max(0, Math.min(gal.length - 1, this._galIndex + dir));
-        const accent = this._hobbyData.accentColor;
-
-        const frame = document.getElementById('ex-gal-frame');
-        if (frame) frame.innerHTML = this._galleryItem(gal[this._galIndex], accent);
-
-        const count = document.getElementById('gal-count');
-        if (count) count.textContent = `${this._galIndex + 1} / ${gal.length}`;
-
-        const dots = document.querySelectorAll('#gal-dots .ex-dot');
-        dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === this._galIndex);
-            dot.style.background = i === this._galIndex ? accent : '';
-        });
+    if (item.type === 'video' && item.src) {
+      return `
+      <video class="ex-gallery-img" controls autoplay muted loop playsinline>
+        <source src="${item.src}" type="video/mp4" />
+      </video>
+    `;
     }
 
-    // ── SHARED ───────────────────────────────────────────────────────
-    _show() {
-        this._overlay.classList.add('active');
-        if (this._scene) this._scene.scene.pause();
-    }
+    // placeholder fallback
+    return `
+    <div class="ex-gallery-placeholder" style="border-color:${accent}">
+      <span class="ex-placeholder-icon">${item.placeholderIcon || '📷'}</span>
+      <p class="ex-placeholder-label">${item.caption || 'COMING SOON'}</p>
+    </div>
+  `;
+  }
 
-    close() {
-        // kill any youtube iframe to stop video playing
-        const iframe = this._overlay.querySelector('iframe');
-        if (iframe) iframe.src = iframe.src;
+  _galleryNav(dir) {
+    const oldVideo = document.querySelector('#ex-gal-frame video');
+    if (oldVideo) { oldVideo.pause(); oldVideo.currentTime = 0; }
+    const gal = this._hobbyData.gallery || [];
+    this._galIndex = Math.max(0, Math.min(gal.length - 1, this._galIndex + dir));
+    const accent = this._hobbyData.accentColor;
 
-        this._overlay.classList.remove('active');
-        if (this._scene) this._scene.scene.resume();
-    }
+    const frame = document.getElementById('ex-gal-frame');
+    if (frame) frame.innerHTML = this._galleryItem(gal[this._galIndex], accent);
+
+    const count = document.getElementById('gal-count');
+    if (count) count.textContent = `${this._galIndex + 1} / ${gal.length}`;
+
+    const dots = document.querySelectorAll('#gal-dots .ex-dot');
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === this._galIndex);
+      dot.style.background = i === this._galIndex ? accent : '';
+    });
+  }
+
+  // ── SHARED ───────────────────────────────────────────────────────
+  _show() {
+    if (!this._overlay) return;
+    this._overlay.classList.add('active');
+    if (this._scene) this._scene.scene.pause();
+  }
+
+  close() {
+    // kill any youtube iframe to stop video playing
+    const iframe = this._overlay.querySelector('iframe');
+    if (iframe) iframe.src = iframe.src;
+
+    this._overlay.classList.remove('active');
+    if (this._scene) this._scene.scene.resume();
+  }
 }
