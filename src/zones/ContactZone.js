@@ -28,7 +28,7 @@ const CONTACTS = [
 ];
 
 export function buildContactZone(scene, H) {
-    const startX = TS * 299;
+    const startX = TS * 370;
     const groundY = H - TS;
     const g = scene.add.graphics();
 

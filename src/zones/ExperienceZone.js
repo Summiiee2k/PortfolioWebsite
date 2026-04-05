@@ -1,7 +1,7 @@
 import { TS, FONT } from '../constants.js';
 
 export function buildExperienceZone(scene, H) {
-    const startX = TS * 150;
+    const startX = TS * 200;
     const groundY = H - TS;
 
     scene.add.text(startX, groundY - TS * 13, '>> EXPERIENCE', {

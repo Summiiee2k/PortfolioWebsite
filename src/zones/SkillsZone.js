@@ -60,7 +60,7 @@ const SKILLS = [
 ];
 
 export function buildSkillsZone(scene, H, platforms) {
-    const startX = TS * 90;
+    const startX = TS * 120;
     const groundY = H - TS;
 
     scene.add.text(startX, groundY - TS * 12, '>> SKILLS', {

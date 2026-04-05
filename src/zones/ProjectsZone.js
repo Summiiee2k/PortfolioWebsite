@@ -1,7 +1,7 @@
 import { TS, FONT } from '../constants.js';
 
 export function buildProjectsZone(scene, H, platforms, pipeZones, projects) {
-    const startX = TS * 195;
+    const startX = TS * 265;
     const groundY = H - TS;
 
     scene.add.text(startX, groundY - TS * 11, '🟢  PROJECTS — ENTER THE PIPES', {

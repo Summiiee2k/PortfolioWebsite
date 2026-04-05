@@ -2,7 +2,7 @@ import { TS, FONT } from '../constants.js';
 import { HOBBIES_DATA } from '../data/hobbies.js';
 
 export function buildHobbiesZone(scene, H, expandZones) {
-    const startX = TS * 250;
+    const startX = TS * 320;
     const groundY = H - TS;
 
     scene.add.text(startX, groundY - TS * 13, '>> HOBBIES', {

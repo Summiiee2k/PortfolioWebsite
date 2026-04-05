@@ -61,6 +61,10 @@ export class BootScene extends Phaser.Scene {
         this.load.image('logo_scoutreach', './assets/images/logo_scoutreach.png');
         this.load.image('logo_sleepleads', './assets/images/logo_sleepleads.png');
         this.load.image('logo_zynga', './assets/images/logo_zynga.png');
+        this.load.image('easter_photo', './assets/images/easter_egg_photo.jpeg');
+        this.load.image('logo_ub', './assets/images/logos/logo_ub.png');
+        this.load.image('logo_parul', './assets/images/logos/logo_parul.png');
+        this.load.image('logo_seamedu', './assets/images/logos/logo_seamedu.png');
     }
 
     create() {

@@ -18,13 +18,13 @@ import { buildEasterEggZone } from '../zones/EasterEggZone.js';
 export const ZONE_TILES = {
     hero: 0,
     about: 26,
-    education: 56,
-    skills: 90,
-    experience: 150,
-    projects: 195,
-    hobbies: 250,
-    contact: 299,
-    easter: 340,
+    education: 65,
+    skills: 120,
+    experience: 200,
+    projects: 265,
+    hobbies: 320,
+    contact: 370,
+    easter: 550
 };
 
 export class WorldScene extends Phaser.Scene {
@@ -42,7 +42,7 @@ export class WorldScene extends Phaser.Scene {
         this._expandPrompt = null;
         this._easterTriggered = false;
 
-        const WORLD_W = TS * 373;
+        const WORLD_W = TS * 600;
         this.physics.world.setBounds(0, 0, WORLD_W, H);
 
         this._biome = new BiomeManager(this);
