@@ -119,29 +119,23 @@ function _buildSchool(scene, px, groundY, s) {
     // ── logo badge ──────────────────────────────────────────────────
     const logoX = px + bW / 2;
     const logoY = by + bH * 0.3;
-    const logoW = 80;
-    const logoH = 80;
+    const logoR = 44;
 
-    // white circle background for logo
+    // white circle background
     g.fillStyle(0xffffff, 0.95);
-    g.fillCircle(logoX, logoY, logoW / 2 + 6);
-    g.lineStyle(3, s.accent, 0.8);
-    g.strokeCircle(logoX, logoY, logoW / 2 + 6);
+    g.fillCircle(logoX, logoY, logoR + 6);
+    g.lineStyle(3, s.accent, 0.9);
+    g.strokeCircle(logoX, logoY, logoR + 6);
 
     if (scene.textures.exists(s.logoKey)) {
-        // clip logo inside circle using a mask
-        const logo = scene.add.image(logoX, logoY, s.logoKey)
-            .setDisplaySize(logoW - 8, logoH - 8)
+        // display logo — no mask, just set display size to fit circle
+        scene.add.image(logoX, logoY, s.logoKey)
+            .setDisplaySize(logoR * 1.6, logoR * 1.6)
             .setOrigin(0.5);
-
-        const maskCircle = scene.add.graphics();
-        maskCircle.fillStyle(0xffffff);
-        maskCircle.fillCircle(logoX, logoY, logoW / 2 - 2);
-        logo.setMask(maskCircle.createGeometryMask());
     } else {
-        // fallback letter badge
+        // fallback — coloured circle with letter
         g.fillStyle(s.accent, 1);
-        g.fillCircle(logoX, logoY, logoW / 2);
+        g.fillCircle(logoX, logoY, logoR);
         scene.add.text(logoX, logoY, s.logoFallbackLetter, {
             fontSize: '18px', fill: '#fff',
             fontFamily: FONT,

@@ -2,10 +2,10 @@ import { TS, FONT } from '../constants.js';
 import { ABOUT_CARDS } from '../data/about.js';
 
 const SIGN_COLORS = [
-    { color: 0x283593, top: 0x5C6BC0, frame: 0x8B6914 }, // blue
-    { color: 0x1B5E20, top: 0x43A047, frame: 0x6D4C2A }, // green
-    { color: 0x4A148C, top: 0xAB47BC, frame: 0x8B6914 }, // purple
-    { color: 0xB71C1C, top: 0xEF5350, frame: 0x6D4C2A }, // red
+    { color: 0xA9AED3, top: 0xA9AED3, frame: 0x8B6914 },
+    { color: 0xA9AED3, top: 0xA9AED3, frame: 0x6D4C2A },
+    { color: 0xA9AED3, top: 0xA9AED3, frame: 0x8B6914 },
+    { color: 0xA9AED3, top: 0xA9AED3, frame: 0x6D4C2A },
 ];
 
 export function buildAboutZone(scene, H, expandZones) {
@@ -88,17 +88,6 @@ function _buildSign(scene, sx, groundY, card, sc, index, expandZones) {
     const dg = scene.add.graphics();
     dg.lineStyle(1, sc.top, 0.7);
     dg.lineBetween(sx + fw + 8, sy + fw + 88, sx + sW - fw - 8, sy + fw + 88);
-
-    // preview text — first line only, truncated
-    const preview = card.paragraphs[0].length > 40
-        ? card.paragraphs[0].substring(0, 40) + '...'
-        : card.paragraphs[0];
-    scene.add.text(sx + sW / 2, sy + fw + 96, preview, {
-        fontSize: '6px', fill: '#aabbcc',
-        fontFamily: FONT,
-        align: 'center', stroke: '#000', strokeThickness: 2,
-        wordWrap: { width: sW - fw * 2 - 10 },
-    }).setOrigin(0.5, 0);
 
     // ── proximity expand zone ──
     const zoneHeight = (groundY - sy) + TS; // from placard top to ground
