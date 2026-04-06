@@ -41,7 +41,7 @@ export function buildHeroZone(scene, H) {
         duration: 900, yoyo: true, repeat: -1
     });
     scene.add.text(TS * 2, midY + 100,
-        'USE THE ARROW KEYS TO MOVE', {
+        'USE THE ARROW KEYS ON KEYBOARD TO MOVE', {
         fontSize: '18px', fill: '#fce300ff',
         fontFamily: FONT
     });
