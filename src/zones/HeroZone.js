@@ -41,8 +41,13 @@ export function buildHeroZone(scene, H) {
         duration: 900, yoyo: true, repeat: -1
     });
     scene.add.text(TS * 2, midY + 100,
-        'USE THE ARROW KEYS TO MOVE :D', {
+        'USE THE ARROW KEYS TO MOVE', {
         fontSize: '18px', fill: '#fce300ff',
+        fontFamily: FONT
+    });
+    scene.add.text(TS * 2, midY + 140,
+        'Turn on the music from top left for more immerison :D', {
+        fontSize: '8.8px', fill: '#fce300ff',
         fontFamily: FONT
     });
 

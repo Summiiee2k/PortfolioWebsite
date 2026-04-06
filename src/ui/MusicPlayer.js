@@ -10,7 +10,7 @@ export class MusicPlayer {
     start() {
         this._music = this._scene.sound.add('bgmusic', {
             loop: true,
-            volume: 1,
+            volume: 0,
         });
         this._music.play();
         this._buildToggle();
@@ -73,7 +73,7 @@ export class MusicPlayer {
             this._scene.tweens.add({
                 targets: this._music,
                 volume: this._volume,
-                duration: 800,
+                duration: 300,
                 ease: 'Linear',
             });
             this._btn.textContent = '♪ MUSIC: ON';
