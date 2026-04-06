@@ -42,13 +42,15 @@ export class ProjectScreen {
             .addEventListener('click', () => this.close());
 
         this._screen.classList.add('active');
-        if (this._scene) this._scene.scene.pause();
         if (this._scene._music) this._scene._music.fadeDown();
+        if (this._scene) this._scene.scene.pause();
+
     }
 
     close() {
         this._screen.classList.remove('active');
-        if (this._scene) this._scene.scene.resume();
         if (this._scene._music) this._scene._music.fadeUp();
+        if (this._scene) this._scene.scene.resume();
+
     }
 }

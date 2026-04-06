@@ -3,7 +3,7 @@ export class MusicPlayer {
         this._scene = scene;
         this._music = null;
         this._muted = true;
-        this._volume = 0.4;
+        this._volume = 0.3;
         this._built = true;
     }
 
