@@ -40,24 +40,12 @@ export function buildHeroZone(scene, H) {
         targets: prompt, alpha: 0.15,
         duration: 900, yoyo: true, repeat: -1
     });
+    scene.add.text(TS * 2, midY + 100,
+        'USE THE ARROW KEYS TO MOVE :D', {
+        fontSize: '18px', fill: '#fce300ff',
+        fontFamily: FONT
+    });
 
-    // animated gold coins
-    // for (let i = 0; i < 8; i++) {
-    //     const cx = TS * (12 + i * 2.2);
-    //     const cy = H - TS * 3.5;
-    //     const coin = scene.add.graphics();
-    //     coin.fillStyle(0xFFD700, 1);
-    //     coin.fillCircle(0, 0, 7);
-    //     coin.fillStyle(0xFFC200, 1);
-    //     coin.fillCircle(-1, -2, 3);
-    //     coin.x = cx; coin.y = cy;
-    //     scene.tweens.add({
-    //         targets: coin, y: cy - 14,
-    //         duration: 500, yoyo: true,
-    //         repeat: -1, delay: i * 110,
-    //         ease: 'Sine.easeInOut'
-    //     });
-    // }
     buildStarNPC(scene, H);
 }
 // ── Star NPC guide ──────────────────────────────────────────────

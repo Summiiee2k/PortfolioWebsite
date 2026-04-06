@@ -112,7 +112,7 @@ function _buildBoehringer(scene, px, groundY) {
     // info card
     _infoCard(scene, px + bW / 2, by - 32,
         'Boehringer\nIngelheim',
-        'Trainee AI Engineer',
+        'Trainee Engineer',
         'Apr 2025 - Mar 2026',
         '#90CAF9', '#00C853'
     );
@@ -275,17 +275,17 @@ function _buildSleepLeads(scene, px, groundY) {
     g.fillRect(px + 18, by + 20 + bH * 0.25, bW - 36, 2);
 
     // inner warm glow through windows
-    g.fillStyle(0xF3E5F5, 0.12);
-    g.fillRect(px + 20, by + 22, bW - 40, bH * 0.5 - 4);
+    // g.fillStyle(0xF3E5F5, 0.12);
+    // g.fillRect(px + 20, by + 22, bW - 40, bH * 0.5 - 4);
 
     // neon "SL" sign on roof — glowing
     const neonX = px + bW / 2;
     const neonY = by - 20;
     // glow halo
-    g.fillStyle(0xE040FB, 0.15);
-    g.fillCircle(neonX, neonY, 32);
-    g.fillStyle(0xE040FB, 0.25);
-    g.fillCircle(neonX, neonY, 22);
+    // g.fillStyle(0xE040FB, 0.15);
+    // g.fillCircle(neonX, neonY, 32);
+    // g.fillStyle(0xE040FB, 0.25);
+    // g.fillCircle(neonX, neonY, 22);
     // sign background
     g.fillStyle(0x1a0025, 1);
     g.fillRoundedRect(neonX - 28, neonY - 16, 56, 32, 4);
@@ -352,7 +352,7 @@ function _buildZynga(scene, px, groundY) {
     g.fillRect(px, by, bW, bH);
 
     // brick mortar grid
-    const brickW = 18, brickH = 10;
+    const brickW = 1, brickH = 10;
     g.lineStyle(1, 0xBCAAA4, 0.25);
     for (let row = 0; row < Math.ceil(bH / brickH); row++) {
         const offset = row % 2 === 0 ? 0 : brickW / 2;

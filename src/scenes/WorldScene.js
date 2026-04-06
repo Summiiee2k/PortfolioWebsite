@@ -14,6 +14,7 @@ import { buildProjectsZone } from '../zones/ProjectsZone.js';
 import { buildHobbiesZone } from '../zones/HobbiesZone.js';
 import { buildContactZone } from '../zones/ContactZone.js';
 import { buildEasterEggZone } from '../zones/EasterEggZone.js';
+import { MusicPlayer } from '../ui/MusicPlayer.js';
 
 export const ZONE_TILES = {
     hero: 0,
@@ -88,6 +89,8 @@ export class WorldScene extends Phaser.Scene {
             this.player.setVelocity(0, 0);
             this.cameras.main.centerOn(targetX + TS * 3, this.player.y);
         });
+        this._music = new MusicPlayer(this);
+        this._music.start();
     }
 
     // ── STARS ────────────────────────────────────────────────────────

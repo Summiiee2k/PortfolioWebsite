@@ -3,7 +3,7 @@ export const ABOUT_CARDS = [
         id: 'origin',
         title: 'THE ORIGIN',
         accentColor: '#b1b9e7ff',
-        icon: '🎮',
+        icon: '',
         paragraphs: [
             "I Started my education with a Bachelor in Game Development at Seamedu School of Pro-Expressionism, Pune. I followed my passion into Game Dev as I like playing gamesa a lot",
             "Learned every layer of the Game Industry — Game engines, physics engines, SDLC, design documents, A/B testing, marketing, shipping and continuous support.",
@@ -16,7 +16,7 @@ export const ABOUT_CARDS = [
         id: 'pivot',
         title: 'THE PIVOT',
         accentColor: '#b1b9e7ff',
-        icon: '💡',
+        icon: '',
         paragraphs: [
             "During my Bachelor's, I had a this subject called Game Design and our professor explained how gathering DATA was very important before satrting any phase in SDLC",
             "This naturally made me curious about it and started exploring that side. Finally into my first internship I was given an opportunity to learn and build a Reinforcement ML model",
@@ -29,7 +29,7 @@ export const ABOUT_CARDS = [
         id: 'build',
         title: 'THE BUILD',
         accentColor: '#b1b9e7ff',
-        icon: '⚙️',
+        icon: '',
         paragraphs: [
             "I did two Master's Degrees in Big data and AI side giving a powerful foundation in that area",
             "Learned a lot more in depth about the term DATA and its meaning.",
@@ -43,7 +43,7 @@ export const ABOUT_CARDS = [
         id: 'now',
         title: 'RIGHT NOW',
         accentColor: '#b1b9e7ff',
-        icon: '📍',
+        icon: '',
         paragraphs: [
             "Currently I am based in Barcelona, Spain. Working as an AI Engineer for two startups with my friend.",
             "Gathered experience in Data, AI , Software Development related roles",

@@ -65,6 +65,7 @@ export class BootScene extends Phaser.Scene {
         this.load.image('logo_ub', './assets/images/logos/logo_ub.png');
         this.load.image('logo_parul', './assets/images/logos/logo_parul.png');
         this.load.image('logo_seamedu', './assets/images/logos/logo_seamedu.png');
+        this.load.audio('bgmusic', 'assets\\music\\bgmusic.mp3');
     }
 
     create() {

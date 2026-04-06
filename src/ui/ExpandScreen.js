@@ -229,6 +229,7 @@ export class ExpandScreen {
     if (!this._overlay) return;
     this._overlay.classList.add('active');
     if (this._scene) this._scene.scene.pause();
+    if (this._scene._music) this._scene._music.fadeDown();
   }
 
   close() {
@@ -238,5 +239,6 @@ export class ExpandScreen {
 
     this._overlay.classList.remove('active');
     if (this._scene) this._scene.scene.resume();
+    if (this._scene._music) this._scene._music.fadeUp();
   }
 }

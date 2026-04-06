@@ -43,10 +43,12 @@ export class ProjectScreen {
 
         this._screen.classList.add('active');
         if (this._scene) this._scene.scene.pause();
+        if (this._scene._music) this._scene._music.fadeDown();
     }
 
     close() {
         this._screen.classList.remove('active');
         if (this._scene) this._scene.scene.resume();
+        if (this._scene._music) this._scene._music.fadeUp();
     }
 }

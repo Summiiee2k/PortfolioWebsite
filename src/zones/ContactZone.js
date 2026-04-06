@@ -2,28 +2,22 @@ import { TS, FONT } from '../constants.js';
 
 const CONTACTS = [
     {
-        icon: '📧',
-        label: 'sumedhbamane8338@gmail.com',
+        icon: "",
+        label: 'Email Me!',
         url: 'mailto:sumedhbamane8338@gmail.com',
         color: '#ff9966'
     },
     {
-        icon: '💼',
-        label: 'linkedin.com/in/sumedh-bamane-494191162',
+        icon: "",
+        label: 'Find me on Linkedin',
         url: 'https://linkedin.com/in/sumedh-bamane-494191162',
         color: '#66aaff'
     },
     {
-        icon: '🐙',
-        label: 'github.com/Summiiee2k',
+        icon: "",
+        label: 'Explore my Github',
         url: 'https://github.com/Summiiee2k',
         color: '#aaffaa'
-    },
-    {
-        icon: '📍',
-        label: 'Barcelona, Spain',
-        url: null,
-        color: '#ffddaa'
     },
 ];
 
@@ -33,8 +27,8 @@ export function buildContactZone(scene, H) {
     const g = scene.add.graphics();
 
     // castle shadow
-    g.fillStyle(0x000000, 0.3);
-    g.fillRect(startX + 8, groundY - TS * 5 + 8, TS * 8, TS * 5);
+    // g.fillStyle(0x000000, 0.3);
+    // g.fillRect(startX + 8, groundY - TS * 5 + 1, TS * 8, TS * 5);
 
     // main body
     g.fillStyle(0x78909C, 1);
@@ -59,30 +53,30 @@ export function buildContactZone(scene, H) {
     g.fillStyle(0x607D8B, 1);
     for (let i = 0; i < 2; i++) {
         g.fillRect(startX - TS + i * TS, groundY - TS * 8, TS * 0.9, TS);
-        g.fillRect(startX + TS * 5.5 + i * TS, groundY - TS * 8, TS * 0.9, TS);
+        g.fillRect(startX + TS * 6.1 + i * TS, groundY - TS * 8, TS * 0.9, TS);
     }
 
     // gate
     g.fillStyle(0x1a1a2e, 1);
-    g.fillRoundedRect(startX + TS * 2.8, groundY - TS * 2.8, TS * 2.4, TS * 2.8, 20);
+    g.fillRoundedRect(startX + TS * 2.5, groundY - TS * 2.8, TS * 2.4, TS * 2.8, 1);
     g.fillStyle(0x37474F, 1);
-    for (let b = 0; b < 4; b++)
-        g.fillRect(startX + TS * 3 + b * 10, groundY - TS * 2.6, 3, TS * 2.4);
+    for (let b = 0; b < 12; b++)
+        g.fillRect(startX + TS * 2.5 + b * 10, groundY - TS * 2.6, 3, TS * 2.6);
 
     // tower windows
     g.fillStyle(0xFFE082, 0.85);
-    g.fillRoundedRect(startX - TS * 0.4, groundY - TS * 5.5, TS * 0.8, TS * 1.1, 8);
-    g.fillRoundedRect(startX + TS * 6.6, groundY - TS * 5.5, TS * 0.8, TS * 1.1, 8);
-    g.fillRoundedRect(startX + TS * 3.4, groundY - TS * 4.8, TS * 1.2, TS * 1.4, 10);
+    g.fillRoundedRect(startX - TS * 0.43, groundY - TS * 6, TS * 1.5, TS * 1.1, 4);
+    g.fillRoundedRect(startX + TS * 6.0, groundY - TS * 6, TS * 1.5, TS * 1.1, 4);
+    g.fillRoundedRect(startX + TS * 2.6, groundY - TS * 4.8, TS * 2, TS * 1.4, 10);
 
     // flag
     g.fillStyle(0xBDBDBD, 1);
-    g.fillRect(startX + TS * 4, groundY - TS * 11, 3, TS * 4);
+    g.fillRect(startX + TS * 3.36, groundY - TS * 11, 3, TS * 6);
     g.fillStyle(0xFF1744, 1);
     g.fillTriangle(
-        startX + TS * 4 + 3, groundY - TS * 11,
-        startX + TS * 4 + 3, groundY - TS * 9,
-        startX + TS * 4 + 32, groundY - TS * 10
+        startX + TS * 3.4, groundY - TS * 11,
+        startX + TS * 3.4, groundY - TS * 9,
+        startX + TS * 4 + 98, groundY - TS * 10
     );
 
     // header

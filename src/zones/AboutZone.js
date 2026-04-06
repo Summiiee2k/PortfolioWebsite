@@ -78,7 +78,7 @@ function _buildSign(scene, sx, groundY, card, sc, index, expandZones) {
 
     // title
     scene.add.text(sx + sW / 2, sy + fw + 62, card.title, {
-        fontSize: '8px', fill: '#ffffff',
+        fontSize: '15px', fill: '#FFDD00',
         fontFamily: FONT,
         align: 'center', stroke: '#000', strokeThickness: 3,
         wordWrap: { width: sW - fw * 2 - 10 },

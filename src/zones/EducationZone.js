@@ -2,17 +2,17 @@ import { TS, FONT } from '../constants.js';
 
 const SCHOOLS = [
     {
-        name: 'Universitat\nde Barcelona',
-        short: 'UB / BTS',
-        degree: 'M.Sc. Big Data\nAnalytics & AI',
-        year: '2024 - 2025',
-        grade: 'Grade: 8.0/10',
-        color: 0x880E4F, accent: 0xE91E63,
-        labelColor: '#F48FB1',
-        logoKey: 'logo_ub',
-        logoFallbackLetter: 'UB',
-        x: 0,
-        style: 'university',
+        name: 'Seamedu\nSchool',
+        short: 'Seamedu',
+        degree: 'B.C.A. Game\nDevelopment',
+        year: '2020 - 2023',
+        grade: 'CGPA: 8.00/10',
+        color: 0xA6A6A6, accent: 0xA6A6A6,
+        labelColor: '#A5D6A7',
+        logoKey: 'logo_seamedu',
+        logoFallbackLetter: 'SE',
+        x: 26,
+        style: 'school',
     },
     {
         name: 'Parul\nUniversity',
@@ -20,7 +20,7 @@ const SCHOOLS = [
         degree: 'M.C.A. Big Data\nAnalytics',
         year: '2023 - 2024',
         grade: 'CGPA: 8.20/10',
-        color: 0x0d47a1, accent: 0x1976D2,
+        color: 0xA6A6A6, accent: 0xA6A6A6,
         labelColor: '#90CAF9',
         logoKey: 'logo_parul',
         logoFallbackLetter: 'PU',
@@ -28,28 +28,29 @@ const SCHOOLS = [
         style: 'university',
     },
     {
-        name: 'Seamedu\nSchool',
-        short: 'Seamedu',
-        degree: 'B.C.A. Game\nDevelopment',
-        year: '2020 - 2023',
-        grade: 'CGPA: 8.00/10',
-        color: 0x1B5E20, accent: 0x388E3C,
-        labelColor: '#A5D6A7',
-        logoKey: 'logo_seamedu',
-        logoFallbackLetter: 'SE',
-        x: 26,
-        style: 'school',
-    },
+        name: 'Universitat\nde Barcelona\n(Barcelona Tchnology School)',
+        short: 'UB / BTS',
+        degree: 'M.Sc. Big Data\nAnalytics & AI',
+        year: '2024 - 2025',
+        grade: 'Grade: 8.0/10',
+        color: 0xA6A6A6, accent: 0xA6A6A6,
+        labelColor: '#F48FB1',
+        logoKey: 'logo_ub',
+        logoFallbackLetter: 'UB',
+        x: 0,
+        style: 'university',
+    }
+
 ];
 
 export function buildEducationZone(scene, H) {
     const startX = TS * 65;
     const groundY = H - TS;
 
-    scene.add.text(startX, groundY - TS * 13, '>> EDUCATION', {
+    scene.add.text(startX, groundY - TS * 15, '>> EDUCATION', {
         fontSize: '18px', fill: '#FFDD00',
         fontFamily: FONT,
-        stroke: '#000', strokeThickness: 5,
+        stroke: '#000000ff', strokeThickness: 5,
     });
 
     SCHOOLS.forEach(s => _buildSchool(scene, startX + s.x * TS, groundY, s));
@@ -73,25 +74,20 @@ function _buildSchool(scene, px, groundY, s) {
     g.fillStyle(s.accent, 1);
     g.fillRect(px, by, bW, 12);
 
-    // side shadow
-    g.fillStyle(0x000000, 0.2);
-    g.fillRect(px + bW - 8, by + 12, 8, bH - 12);
-
     // style-specific roofline
     if (s.style === 'university') {
         g.fillStyle(s.accent, 0.6);
         g.fillTriangle(px, by, px + bW, by, px + bW / 2, by - TS * 1.4);
         g.fillStyle(s.accent, 0.4);
-        g.fillEllipse(px + bW / 2, by - TS * 0.5, TS * 2.2, TS * 1.6);
     } else {
         g.fillStyle(s.accent, 1);
         g.fillRect(px + bW / 2 - TS, by - TS * 1.5, TS * 2, TS * 1.5);
         g.fillRect(px + bW / 2 - TS * 0.3, by - TS * 2.2, TS * 0.6, TS * 0.8);
     }
 
-    // windows — 2 rows × 4 cols
+    // windows
     for (let row = 0; row < 2; row++) {
-        for (let col = 0; col < 4; col++) {
+        for (let col = 0; col < 5; col++) {
             const wx = px + 14 + col * TS * 1.9;
             const wy = by + 22 + row * TS * 2;
             g.fillStyle(0x000000, 0.35);
@@ -108,32 +104,21 @@ function _buildSchool(scene, px, groundY, s) {
 
     // entrance
     g.fillStyle(0x0d0d0d, 1);
-    g.fillRoundedRect(px + bW / 2 - 18, groundY - TS * 2.2, 36, TS * 2.2, 8);
+    g.fillRoundedRect(px + bW / 2 - 50, groundY - TS * 2.2, 100, TS * 2.2, 1);
     g.fillStyle(s.accent, 0.3);
-    g.fillRect(px + bW / 2 - 14, groundY - TS * 2, 28, TS * 2);
-    // steps
-    g.fillStyle(s.accent, 0.35);
-    g.fillRect(px + bW / 2 - 24, groundY - 12, 48, 12);
-    g.fillRect(px + bW / 2 - 20, groundY - 22, 40, 10);
 
     // ── logo badge ──────────────────────────────────────────────────
     const logoX = px + bW / 2;
     const logoY = by + bH * 0.3;
     const logoR = 44;
 
-    // white circle background
-    g.fillStyle(0xffffff, 0.95);
-    g.fillCircle(logoX, logoY, logoR + 6);
-    g.lineStyle(3, s.accent, 0.9);
-    g.strokeCircle(logoX, logoY, logoR + 6);
-
     if (scene.textures.exists(s.logoKey)) {
         // display logo — no mask, just set display size to fit circle
-        scene.add.image(logoX, logoY, s.logoKey)
-            .setDisplaySize(logoR * 1.6, logoR * 1.6)
+        scene.add.image(logoX, logoY + 100, s.logoKey)
+            .setDisplaySize(logoR * 5, logoR * 3)
             .setOrigin(0.5);
     } else {
-        // fallback — coloured circle with letter
+        // fallback
         g.fillStyle(s.accent, 1);
         g.fillCircle(logoX, logoY, logoR);
         scene.add.text(logoX, logoY, s.logoFallbackLetter, {
@@ -187,7 +172,7 @@ function _buildSchool(scene, px, groundY, s) {
 
     // draw card background now we know the size
     const cg = scene.add.graphics();
-    cg.fillStyle(0x000000, 0.82);
+    cg.fillStyle(0x000000, 0.35);
     cg.fillRoundedRect(cardCX - cardW / 2, cardY, cardW, totalH, 8);
     cg.lineStyle(2, s.accent, 0.8);
     cg.strokeRoundedRect(cardCX - cardW / 2, cardY, cardW, totalH, 8);

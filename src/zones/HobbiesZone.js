@@ -51,17 +51,6 @@ function _buildHobbyPlacard(scene, px, groundY, hob, expandZones) {
     g.fillStyle(0x08081a, 1);
     g.fillRect(px + fw, py + fw, pW - fw * 2, pHI - fw);
 
-    // checkerboard placeholder
-    const cs = 18;
-    for (let row = 0; row < Math.ceil((pHI - fw) / cs); row++) {
-        for (let col2 = 0; col2 < Math.ceil((pW - fw * 2) / cs); col2++) {
-            if ((row + col2) % 2 === 0) {
-                g.fillStyle(0xffffff, 0.025);
-                g.fillRect(px + fw + col2 * cs, py + fw + row * cs, cs, cs);
-            }
-        }
-    }
-
     // icon in image area
     scene.add.text(px + pW / 2, py + fw + (pHI - fw) * 0.12,
         hob.icon, { fontSize: '32px' }
