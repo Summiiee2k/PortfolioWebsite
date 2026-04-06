@@ -2,9 +2,9 @@ export class MusicPlayer {
     constructor(scene) {
         this._scene = scene;
         this._music = null;
-        this._muted = false;
+        this._muted = true;
         this._volume = 0.4;
-        this._built = false;
+        this._built = true;
     }
 
     start() {
@@ -49,7 +49,7 @@ export class MusicPlayer {
 
         const btn = document.createElement('div');
         btn.id = 'music-btn';
-        btn.textContent = '♪ MUSIC: OFF';
+        btn.textContent = 'MUSIC: OFF';
         btn.addEventListener('click', () => this.toggle());
         document.body.appendChild(btn);
         this._btn = btn;
@@ -66,7 +66,7 @@ export class MusicPlayer {
                 duration: 600,
                 ease: 'Linear',
             });
-            this._btn.textContent = '♪ MUSIC: OFF';
+            this._btn.textContent = 'MUSIC: OFF';
             this._btn.classList.remove('on');
         } else {
             // fade in
@@ -76,7 +76,7 @@ export class MusicPlayer {
                 duration: 300,
                 ease: 'Linear',
             });
-            this._btn.textContent = '♪ MUSIC: ON';
+            this._btn.textContent = 'MUSIC: ON';
             this._btn.classList.add('on');
         }
     }
@@ -87,7 +87,7 @@ export class MusicPlayer {
         this._scene.tweens.add({
             targets: this._music,
             volume: this._volume * 0,
-            duration: 400,
+            duration: 0,
         });
     }
 
@@ -97,7 +97,7 @@ export class MusicPlayer {
         this._scene.tweens.add({
             targets: this._music,
             volume: this._volume,
-            duration: 600,
+            duration: 0,
         });
     }
 }
