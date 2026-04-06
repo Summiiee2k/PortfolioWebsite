@@ -86,7 +86,7 @@ export class MusicPlayer {
         if (!this._music || this._muted) return;
         this._scene.tweens.add({
             targets: this._music,
-            volume: this._volume * 0.15,
+            volume: this._volume * 0,
             duration: 400,
         });
     }
