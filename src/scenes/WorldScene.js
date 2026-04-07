@@ -91,6 +91,9 @@ export class WorldScene extends Phaser.Scene {
         });
         this._music = new MusicPlayer(this);
         this._music.start();
+        const zoom = Math.max(0.5, Math.min(1, window.innerWidth / 1920));
+        this.cameras.main.setZoom(zoom);
+
     }
 
     // ── STARS ────────────────────────────────────────────────────────

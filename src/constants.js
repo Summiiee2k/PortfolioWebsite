@@ -1,6 +1,6 @@
 export const TILE = 16;
-export const SCALE = 3;
-export const TS = TILE * SCALE; // 48px
+export const SCALE = Math.max(1.5, Math.min(3, window.innerWidth / 640));
+export const TS = Math.round(TILE * SCALE);
 
 export const FONT = '"Press Start 2P", monospace';
 

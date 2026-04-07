@@ -46,10 +46,18 @@ export function buildHeroZone(scene, H) {
         fontFamily: FONT
     });
     scene.add.text(TS * 2, midY + 140,
+        'Use down arrow key to expand sections wherever prompted', {
+        fontSize: '10px', fill: '#fce300ff',
+        fontFamily: FONT
+    });
+    scene.add.text(TS * 2, midY + 180,
         'Turn on the music from top left for more immerison :D', {
         fontSize: '8.8px', fill: '#fce300ff',
         fontFamily: FONT
     });
+
+
+
 
     buildStarNPC(scene, H);
 }

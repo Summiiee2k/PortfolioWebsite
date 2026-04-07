@@ -4,11 +4,18 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Sumedh Bamane — Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./styles/main.css" />
+    <meta property="og:title" content="Sumedh Bamane — Interactive Portfolio" />
+    <meta property="og:description"
+        content="An AI Engineer's portfolio — as a Mario-style platformer game. Walk through my experience, projects and skills." />
+    <meta property="og:image" content="https://summiiee2k.github.io/PortfolioWebsite/assets/images/preview.png" />
+    <meta property="og:url" content="https://summiiee2k.github.io/PortfolioWebsite" />
+    <meta name="twitter:card" content="summary_large_image" />
 </head>
 
 <body>
@@ -58,6 +65,15 @@
 
         new Phaser.Game(config);
     </script>
+    <div id="rotate-msg">
+        <div class="rotate-inner">
+            <div style="font-size:48px">📱↔️</div>
+            <p>ROTATE YOUR PHONE</p>
+            <p style="font-size:8px;color:#556677;margin-top:12px">
+                THIS GAME PLAYS BEST<br>IN LANDSCAPE MODE
+            </p>
+        </div>
+    </div>
 
 </body>
 

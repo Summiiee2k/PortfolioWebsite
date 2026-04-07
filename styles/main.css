@@ -539,3 +539,60 @@ body {
     height: 100%;
     border: none;
 }
+
+@media (max-width: 768px) {
+    #dpad {
+        bottom: 12px;
+        grid-template-columns: 56px 56px 56px;
+        grid-template-rows: 56px 56px;
+        gap: 6px;
+    }
+
+    .dpad-btn {
+        font-size: 22px;
+        border-radius: 6px;
+    }
+
+    #music-btn {
+        bottom: 140px;
+    }
+
+    #resume-btn {
+        display: none;
+    }
+
+    #nav-toggle {
+        top: 12px;
+        right: 12px;
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    #dpad {
+        grid-template-columns: 64px 64px 64px;
+        grid-template-rows: 64px 64px;
+    }
+}
+
+#rotate-msg {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #050510;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    font-family: 'Press Start 2P', monospace;
+    color: #00ff88;
+    font-size: 12px;
+    line-height: 2;
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+    #rotate-msg {
+        display: flex;
+    }
+}
