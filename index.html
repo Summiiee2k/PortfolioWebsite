@@ -3,48 +3,115 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- single viewport tag — no duplicate -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Sumedh Bamane — Portfolio</title>
+
+    <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+    <!-- styles -->
     <link rel="stylesheet" href="./styles/main.css" />
+
+    <!-- social preview -->
     <meta property="og:title" content="Sumedh Bamane — Interactive Portfolio" />
     <meta property="og:description"
         content="An AI Engineer's portfolio — as a Mario-style platformer game. Walk through my experience, projects and skills." />
     <meta property="og:image" content="https://summiiee2k.github.io/PortfolioWebsite/assets/images/preview.png" />
     <meta property="og:url" content="https://summiiee2k.github.io/PortfolioWebsite" />
     <meta name="twitter:card" content="summary_large_image" />
+
+    <style>
+        /* ── Rotate nudge (portrait phones only) ── */
+        #rotate-msg {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #050510;
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            font-family: 'Press Start 2P', monospace;
+            color: #00ff88;
+            font-size: 12px;
+            line-height: 2.2;
+            padding: 24px;
+        }
+
+        #rotate-msg p {
+            margin: 0;
+        }
+
+        @media (max-width: 768px) and (orientation: portrait) {
+            #rotate-msg {
+                display: flex;
+            }
+
+            /* hide everything else in portrait */
+            #game-container,
+            #dpad,
+            #expand-screen,
+            #project-screen,
+            #nav-toggle,
+            #music-btn,
+            #resume-btn {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
+    <!-- game canvas -->
     <div id="game-container"></div>
 
-    <!-- Project overlay -->
+    <!-- project pipe overlay -->
     <div id="project-screen">
         <div class="project-card" id="project-card-content"></div>
     </div>
 
-    <!-- D-pad -->
+    <!-- about / hobbies expand overlay -->
+    <div id="expand-screen">
+        <div class="expand-card" id="expand-content"></div>
+    </div>
+
+    <!-- on-screen D-pad -->
     <div id="dpad">
         <div class="dpad-btn" id="btn-up">▲</div>
         <div class="dpad-btn" id="btn-left">◀</div>
         <div class="dpad-btn" id="btn-down">▼</div>
         <div class="dpad-btn" id="btn-right">▶</div>
     </div>
-    <div id="expand-screen">
-        <div class="expand-card" id="expand-content"></div>
+
+    <!-- portrait rotate prompt -->
+    <div id="rotate-msg">
+        <div>📱↔️</div>
+        <p>ROTATE YOUR PHONE</p>
+        <p style="font-size:8px; color:#556677; margin-top:16px; line-height:2">
+            THIS GAME PLAYS BEST<br>IN LANDSCAPE MODE
+        </p>
     </div>
 
-    <!-- Phaser via CDN -->
+    <!-- Phaser -->
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
 
-    <!-- Main entry — ES module -->
+    <!-- game bootstrap -->
     <script type="module">
         import { BootScene } from './src/scenes/BootScene.js';
         import { WorldScene } from './src/scenes/WorldScene.js';
+
+        // ── Dynamic scale based on screen width ──────────────────────
+        // 1920px wide → scale 1.0 (full size)
+        // 1280px wide → scale ~0.67
+        // 768px wide  → scale ~0.5  (tablet landscape)
+        // phones      → scale ~0.4
+        const baseWidth = 1920;
+        const zoom = Math.max(0.35, Math.min(1, window.innerWidth / baseWidth));
 
         const config = {
             type: Phaser.AUTO,
@@ -54,26 +121,41 @@
             backgroundColor: '#050510',
             scale: {
                 mode: Phaser.Scale.RESIZE,
-                autoCenter: Phaser.Scale.CENTER_BOTH
+                autoCenter: Phaser.Scale.CENTER_BOTH,
             },
             physics: {
                 default: 'arcade',
-                arcade: { gravity: { y: 700 }, debug: false }
+                arcade: { gravity: { y: 700 }, debug: false },
             },
-            scene: [BootScene, WorldScene]
+            scene: [BootScene, WorldScene],
         };
 
-        new Phaser.Game(config);
+        const game = new Phaser.Game(config);
+
+        // Apply camera zoom once WorldScene is ready
+        game.events.on('ready', () => {
+            const world = game.scene.getScene('World');
+            if (world && world.cameras) {
+                world.cameras.main.setZoom(zoom);
+            }
+        });
+
+        // Also apply zoom when WorldScene creates (belt-and-suspenders)
+        game.events.on('step', () => {
+            const world = game.scene.getScene('World');
+            if (world && world.cameras && world.cameras.main &&
+                world.cameras.main.zoom === 1 && zoom !== 1) {
+                world.cameras.main.setZoom(zoom);
+            }
+        });
+
+        // handle window resize
+        window.addEventListener('resize', () => {
+            const newZoom = Math.max(0.35, Math.min(1, window.innerWidth / baseWidth));
+            const w = game.scene.getScene('World');
+            if (w && w.cameras) w.cameras.main.setZoom(newZoom);
+        });
     </script>
-    <div id="rotate-msg">
-        <div class="rotate-inner">
-            <div style="font-size:48px">📱↔️</div>
-            <p>ROTATE YOUR PHONE</p>
-            <p style="font-size:8px;color:#556677;margin-top:12px">
-                THIS GAME PLAYS BEST<br>IN LANDSCAPE MODE
-            </p>
-        </div>
-    </div>
 
 </body>
 

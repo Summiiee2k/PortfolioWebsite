@@ -575,24 +575,63 @@ body {
     }
 }
 
-#rotate-msg {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: #050510;
-    z-index: 9999;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    font-family: 'Press Start 2P', monospace;
-    color: #00ff88;
-    font-size: 12px;
-    line-height: 2;
+/* ── Responsive D-pad ─────────────────────────────────────────── */
+@media (max-width: 1280px) {
+    #dpad {
+        grid-template-columns: 52px 52px 52px;
+        grid-template-rows: 52px 52px;
+    }
 }
 
-@media (max-width: 768px) and (orientation: portrait) {
-    #rotate-msg {
-        display: flex;
+@media (max-width: 768px) {
+    #dpad {
+        bottom: 16px;
+        grid-template-columns: 60px 60px 60px;
+        grid-template-rows: 60px 60px;
+        gap: 6px;
+    }
+
+    .dpad-btn {
+        font-size: 20px;
+    }
+
+    #music-btn {
+        bottom: 160px;
+        right: 12px;
+    }
+
+    #nav-toggle {
+        top: 12px;
+        right: 12px;
+        font-size: 9px;
+        padding: 6px 10px;
+    }
+
+    #resume-btn {
+        display: none;
+    }
+
+    .expand-card {
+        padding: 20px 16px;
+    }
+
+    .ex-title {
+        font-size: 11px;
+    }
+
+    .ex-para {
+        font-size: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    #dpad {
+        grid-template-columns: 64px 64px 64px;
+        grid-template-rows: 64px 64px;
+        gap: 8px;
+    }
+
+    .dpad-btn {
+        font-size: 22px;
     }
 }
