@@ -4,6 +4,7 @@ import { ProjectScreen } from '../ui/ProjectScreen.js';
 import { ExpandScreen } from '../ui/ExpandScreen.js';
 import { Dpad } from '../ui/Dpad.js';
 import { NavMenu } from '../ui/NavMenu.js';
+import { MusicPlayer } from '../ui/MusicPlayer.js';
 import { BiomeManager } from '../zones/BiomeManager.js';
 import { buildHeroZone } from '../zones/HeroZone.js';
 import { buildAboutZone } from '../zones/AboutZone.js';
@@ -14,7 +15,6 @@ import { buildProjectsZone } from '../zones/ProjectsZone.js';
 import { buildHobbiesZone } from '../zones/HobbiesZone.js';
 import { buildContactZone } from '../zones/ContactZone.js';
 import { buildEasterEggZone } from '../zones/EasterEggZone.js';
-import { MusicPlayer } from '../ui/MusicPlayer.js';
 
 export const ZONE_TILES = {
     hero: 0,
@@ -27,7 +27,6 @@ export const ZONE_TILES = {
     contact: 370,
     easter: 550
 };
-
 export class WorldScene extends Phaser.Scene {
     constructor() { super('World'); }
 
@@ -35,6 +34,17 @@ export class WorldScene extends Phaser.Scene {
         const W = this.scale.width;
         const H = this.scale.height;
 
+        // ── Responsive zoom ────────────────────────────────────────────
+        // Scale down on smaller screens so more world is visible
+        // 1920px = zoom 1.0 | 1280px = zoom 0.67 | 768px = zoom 0.40
+        const zoom = Math.max(0.35, Math.min(1.0, W / 1920));
+        this.cameras.main.setZoom(zoom);
+
+        // Effective height — the actual game world space visible at this zoom
+        // Without this, ground is drawn at H but camera shows H/zoom space → black gap
+        const EH = Math.round(H / zoom);
+
+        // ── State ──────────────────────────────────────────────────────
         this.pipeZones = [];
         this.expandZones = [];
         this._currentPipe = null;
@@ -44,35 +54,43 @@ export class WorldScene extends Phaser.Scene {
         this._easterTriggered = false;
 
         const WORLD_W = TS * 600;
-        this.physics.world.setBounds(0, 0, WORLD_W, H);
+        this.physics.world.setBounds(0, 0, WORLD_W, EH);
 
+        // ── Background systems ─────────────────────────────────────────
         this._biome = new BiomeManager(this);
-        this._buildStars(WORLD_W, H);
-        this._buildClouds(WORLD_W, H);
+        this._buildStars(WORLD_W, EH);
+        this._buildClouds(WORLD_W, EH);
 
+        // ── Ground + platforms ─────────────────────────────────────────
         this.platforms = this.physics.add.staticGroup();
-        this._buildGround(WORLD_W, H);
+        this._buildGround(WORLD_W, EH);
 
-        buildHeroZone(this, H);
-        buildAboutZone(this, H, this.expandZones);
-        buildEducationZone(this, H);
-        buildSkillsZone(this, H, this.platforms);
-        buildExperienceZone(this, H);
-        buildProjectsZone(this, H, this.platforms, this.pipeZones, PROJECTS);
-        buildHobbiesZone(this, H, this.expandZones);
-        buildContactZone(this, H);
-        buildEasterEggZone(this, H);
+        // ── Zones — all use EH so content sits at correct positions ────
+        buildHeroZone(this, EH);
+        buildAboutZone(this, EH, this.expandZones);
+        buildEducationZone(this, EH);
+        buildSkillsZone(this, EH, this.platforms);
+        buildExperienceZone(this, EH);
+        buildProjectsZone(this, EH, this.platforms, this.pipeZones, PROJECTS);
+        buildHobbiesZone(this, EH, this.expandZones);
+        buildContactZone(this, EH);
+        buildEasterEggZone(this, EH);
 
-        this.player = this._createPlayer(H);
+        // ── Player ─────────────────────────────────────────────────────
+        this.player = this._createPlayer(EH);
 
-        this.cameras.main.setBounds(0, 0, WORLD_W, H);
+        // ── Camera ─────────────────────────────────────────────────────
+        this.cameras.main.setBounds(0, 0, WORLD_W, EH);
         this.cameras.main.startFollow(this.player, true, 0.08, 0.08);
+        this.cameras.main.setZoom(zoom); // reapply after setBounds
 
+        // ── Input ──────────────────────────────────────────────────────
         this.keys = this.input.keyboard.createCursorKeys();
         this.keys.down = this.input.keyboard.addKey(
             Phaser.Input.Keyboard.KeyCodes.DOWN
         );
 
+        // ── UI ─────────────────────────────────────────────────────────
         this._projectScreen = new ProjectScreen();
         this._projectScreen.setScene(this);
 
@@ -89,12 +107,18 @@ export class WorldScene extends Phaser.Scene {
             this.player.setVelocity(0, 0);
             this.cameras.main.centerOn(targetX + TS * 3, this.player.y);
         });
-        this._music = new MusicPlayer(this);
-        this._music.start();
-        // ── Responsive camera zoom ────────────────────────────────────────
-        const zoom = Math.max(0.35, Math.min(1, window.innerWidth / 1920));
-        this.cameras.main.setZoom(zoom);
 
+        // Music — only if audio asset loaded
+        if (this.cache.audio.exists('bgmusic')) {
+            this._music = new MusicPlayer(this);
+            this._music.start();
+        }
+
+        // ── Handle window resize ───────────────────────────────────────
+        this.scale.on('resize', (gameSize) => {
+            const newZoom = Math.max(0.35, Math.min(1.0, gameSize.width / 1920));
+            this.cameras.main.setZoom(newZoom);
+        });
     }
 
     // ── STARS ────────────────────────────────────────────────────────
@@ -138,26 +162,22 @@ export class WorldScene extends Phaser.Scene {
 
     // ── GROUND ───────────────────────────────────────────────────────
     _buildGround(worldW, H) {
+        // H here is EH (effective height) so ground sits at bottom of visible area
         const groundY = H - TS;
+
         for (let x = 0; x < worldW; x += TS) {
             const g = this.add.graphics();
-            // dirt base
             g.fillStyle(0x8B5E3C, 1);
             g.fillRect(x, groundY, TS, TS * 2);
-            // grass top
             g.fillStyle(0x43A047, 1);
             g.fillRect(x, groundY, TS, 11);
-            // grass highlight
             g.fillStyle(0x66BB6A, 1);
             g.fillRect(x, groundY, TS, 4);
-            // tile border
             g.lineStyle(1, 0x000000, 0.1);
             g.strokeRect(x, groundY, TS, TS);
-            // lower dirt
             g.fillStyle(0x6D4C2A, 1);
             g.fillRect(x, groundY + TS, TS, TS);
 
-            // physics body
             const body = this.add.rectangle(
                 x + TS / 2, groundY + TS / 2, TS, TS
             ).setVisible(false);
@@ -240,9 +260,8 @@ export class WorldScene extends Phaser.Scene {
         this._checkPipeProximity();
         this._checkExpandProximity();
 
-        // pipe entry
+        // single down press handler — pipe takes priority over expand
         const downPressed = Phaser.Input.Keyboard.JustDown(k.down) || this._dpad.justDown();
-
         if (downPressed) {
             if (this._currentPipe) {
                 this._projectScreen.open(this._currentPipe.projectData);
@@ -266,11 +285,7 @@ export class WorldScene extends Phaser.Scene {
 
         if (nearest !== this._currentExpand) {
             this._currentExpand = nearest;
-
-            if (this._expandPrompt) {
-                this._expandPrompt.destroy();
-                this._expandPrompt = null;
-            }
+            if (this._expandPrompt) { this._expandPrompt.destroy(); this._expandPrompt = null; }
 
             if (nearest) {
                 const label = nearest.hobbyData
