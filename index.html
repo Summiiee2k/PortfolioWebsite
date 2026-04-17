@@ -44,10 +44,10 @@
     </div>
 
     <!-- visitor counter badge -->
-    <div id="visitor-badge">
+    <!-- <div id="visitor-badge">
         <span class="visitor-label">VISITORS</span>
         <span class="visitor-count" id="visitor-count">...</span>
-    </div>
+    </div> -->
 
     <!-- portrait rotate prompt — shown by CSS media query -->
     <div id="rotate-msg">
@@ -59,7 +59,7 @@
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
 
     <!-- visitor counter via countapi -->
-    <script>
+    <!-- <script>
         (async () => {
             try {
                 // namespace: your github username, key: portfolio-visitors
@@ -75,7 +75,7 @@
                 if (el) el.textContent = '—';
             }
         })();
-    </script>
+    </script> -->
 
     <!-- game bootstrap -->
     <script type="module">
@@ -106,6 +106,30 @@
         };
 
         new Phaser.Game(config);
+    </script>
+    <script data-goatcounter="https://summiiee2k.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <p class="visitor-count"
+        style="position: absolute; bottom: 20px; right: 20px; color: #00ffcc; font-family: 'Press Start 2P', monospace; font-size: 10px; z-index: 9999; text-shadow: 2px 2px 0px #000;">
+        Total Profile Views: <span id="stats">Loading...</span>
+    </p>
+
+    <script>
+        var request = new XMLHttpRequest();
+        request.addEventListener("load", function () {
+            try {
+                // Parses the view count from GoatCounter
+                document.getElementById("stats").innerText = JSON.parse(this.responseText).count;
+            } catch (e) {
+                // If there are no views yet or an error occurs, it defaults to showing 1 instead of being stuck on Loading
+                document.getElementById("stats").innerText = "1";
+            }
+        });
+
+        // Automatically grabs and encodes your exact GitHub Pages subfolder path
+        var currentPath = encodeURIComponent(location.pathname);
+
+        request.open("GET", "https://summiiee2k.goatcounter.com/counter/" + currentPath + ".json");
+        request.send();
     </script>
 
 </body>
