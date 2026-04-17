@@ -108,6 +108,7 @@
         new Phaser.Game(config);
     </script>
     <script data-goatcounter="https://summiiee2k.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
     <p class="visitor-count"
         style="position: absolute; bottom: 20px; right: 20px; color: #00ffcc; font-family: 'Press Start 2P', monospace; font-size: 10px; z-index: 9999; text-shadow: 2px 2px 0px #000;">
         Total Profile Views: <span id="stats">Loading...</span>
@@ -116,16 +117,20 @@
     <script>
         var request = new XMLHttpRequest();
         request.addEventListener("load", function () {
-            try {
-                // Parses the view count from GoatCounter
-                document.getElementById("stats").innerText = JSON.parse(this.responseText).count;
-            } catch (e) {
-                // If there are no views yet or an error occurs, it defaults to showing 1 instead of being stuck on Loading
+            // Check if GoatCounter successfully found the view count (Status 200)
+            if (this.status === 200) {
+                try {
+                    document.getElementById("stats").innerText = JSON.parse(this.responseText).count;
+                } catch (e) {
+                    document.getElementById("stats").innerText = "1";
+                }
+            } else {
+                // If GoatCounter returns a 404 because there are no views yet, default to 1
                 document.getElementById("stats").innerText = "1";
             }
         });
 
-        // Automatically grabs and encodes your exact GitHub Pages subfolder path
+        // Automatically grabs your exact GitHub Pages subfolder path
         var currentPath = encodeURIComponent(location.pathname);
 
         request.open("GET", "https://summiiee2k.goatcounter.com/counter/" + currentPath + ".json");
