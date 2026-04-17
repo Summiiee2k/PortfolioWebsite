@@ -22,7 +22,7 @@ export class MusicPlayer {
         style.textContent = `
       #music-btn {
         position: fixed;
-        bottom: 894px; right: 1650px;
+        bottom: 894px; right: 1750px;
         background: rgba(0,0,0,0.7);
         border: 2px solid rgba(100,100,150,0.4);
         color: #556677;
