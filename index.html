@@ -117,23 +117,21 @@
     <script>
         var request = new XMLHttpRequest();
         request.addEventListener("load", function () {
-            // Check if GoatCounter successfully found the view count (Status 200)
             if (this.status === 200) {
                 try {
-                    document.getElementById("stats").innerText = JSON.parse(this.responseText).count;
+                    // Get the number, strip any commas/formatting, and display it
+                    let count = JSON.parse(this.responseText).count;
+                    document.getElementById("stats").innerText = count;
                 } catch (e) {
                     document.getElementById("stats").innerText = "1";
                 }
             } else {
-                // If GoatCounter returns a 404 because there are no views yet, default to 1
                 document.getElementById("stats").innerText = "1";
             }
         });
 
-        // Automatically grabs your exact GitHub Pages subfolder path
-        var currentPath = encodeURIComponent(location.pathname);
-
-        request.open("GET", "https://summiiee2k.goatcounter.com/counter/" + currentPath + ".json");
+        // Use TOTAL.json to get all views reliably, avoiding path slash errors!
+        request.open("GET", "https://summiiee2k.goatcounter.com/counter/TOTAL.json");
         request.send();
     </script>
 
